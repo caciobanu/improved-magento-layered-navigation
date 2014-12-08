@@ -1,0 +1,2 @@
+improved-magento-layered-navigation
+===================================
