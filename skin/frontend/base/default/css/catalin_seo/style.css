@@ -1,0 +1,21 @@
+div.price-slider {
+    background: url("../../images/catalin_seo/bkg_slider.png") repeat-x scroll 0 0 transparent;
+    height: 17px;
+}
+
+div.price-slider .filter-handle {
+    height: 17px;
+    width: 10px;
+    cursor: e-resize;
+    display: block;
+}
+
+div.price-slider .price-slider-from {
+    background: url("../../images/catalin_seo/slider.png") no-repeat scroll 0 0 transparent;
+}
+
+div.price-slider .price-slider-to {
+    background: url("../../images/catalin_seo/slider.png") no-repeat scroll -26px 0 transparent;
+    cursor: w-resize;
+    margin-top: -17px;
+}
