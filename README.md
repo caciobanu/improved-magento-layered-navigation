@@ -15,3 +15,13 @@ Features
 - multiple filters for the same attribute
 
 All the above features can be enabled/disabled from backend: "System -> Configuration -> Catalin SEO -> Catalog Layered Navigation"
+
+Install via Modman
+----------------
+
+You can install this module using [Colin Mollenhour's](https://github.com/colinmollenhour) [Modman tool](https://github.com/colinmollenhour/modman).
+
+```bash
+$ modman init
+$ modman clone git@github.com:caciobanu/improved-magento-layered-navigation.git
+```
