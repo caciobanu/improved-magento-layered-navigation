@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Model_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Model_Layer_Filter_Attribute
@@ -77,7 +77,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Mode
         }
 
         $attribute = $this->getAttributeModel();
-        $this->_requestVar = $attribute->getAttributeCode();
+        //$this->_requestVar = $attribute->getAttributeCode();
 
         $key = $this->getLayer()->getStateKey() . '_' . $this->_requestVar;
         $data = $this->getLayer()->getAggregator()->getCacheData($key);
@@ -97,14 +97,14 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Mode
                         if (!empty($optionsCount[$option['value']])) {
                             $data[] = array(
                                 'label' => $option['label'],
-                                'value' => $attrUrlKeyModel->getUrlKey($attribute->getId(), $option['value']),
+                                'value' => $attrUrlKeyModel->getUrlValue($attribute->getId(), $option['value']),
                                 'count' => $optionsCount[$option['value']],
                             );
                         }
                     } else {
                         $data[] = array(
                             'label' => $option['label'],
-                            'value' => $attrUrlKeyModel->getUrlKey($attribute->getId(), $option['value']),
+                            'value' => $attrUrlKeyModel->getUrlValue($attribute->getId(), $option['value']),
                             'count' => isset($optionsCount[$option['value']]) ? $optionsCount[$option['value']] : 0,
                         );
                     }
@@ -120,6 +120,22 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Mode
         }
         
         return $data;
+    }
+
+    /**
+     * Set request variable name which is used for apply filter
+     *
+     * @param   string $varName
+     * @return  Mage_Catalog_Model_Layer_Filter_Abstract
+     */
+    public function setRequestVar($varName)
+    {
+        if (Mage::helper('catalin_seo')->isEnabled()) {
+            $attrUrlKeyModel = Mage::getResourceModel('catalin_seo/attribute_urlkey');
+            $varName = $attrUrlKeyModel->getUrlKey($varName);
+        }
+
+        return parent::setRequestVar($varName);
     }
 
 }

@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Model_Catalog_Resource_Layer_Filter_Attribute extends Mage_Catalog_Model_Resource_Layer_Filter_Attribute
@@ -41,8 +41,8 @@ class Catalin_SEO_Model_Catalog_Resource_Layer_Filter_Attribute extends Mage_Cat
         );
 
         $attrUrlKeyModel = Mage::getResourceModel('catalin_seo/attribute_urlkey');
-        //$options = $attribute->getSource()->getAllOptions(false);
         if (!is_array($value)) {
+            $options = $attribute->getSource()->getAllOptions(false);
             foreach ($options as $option) {
                 if ($option['label'] == $value) {
                     $value = $option['value'];

@@ -11,14 +11,14 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Resource_Abstract
 {
 
-    protected $_storesIds;
-    protected $_helper;
+    protected $storesIds;
+    protected $helper;
 
     /**
      * Initialize resource model
@@ -43,28 +43,28 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
     /**
      * Generate SEO values for catalog product attributes options
      *
-     * @param int $attributeId - transmit this to limit processing to one specific attribute
+     * @param int|null $attributeId - transmit this to limit processing to one specific attribute
      * @return Catalin_SEO_Model_Resource_Indexer_Attribute
      */
     public function reindexSeoUrlKeys($attributeId = null)
     {
-        $attributes = $this->_getAttributes($attributeId);
-        $stores = $this->_getAllStoresIds();
+        $attributes = $this->getAttributes($attributeId);
+        $stores = $this->getAllStoresIds();
 
         $data = array();
         foreach ($attributes as $attribute) {
             if ($attribute->usesSource()) {
                 foreach ($stores as $storeId) {
-                    $result = $this->_getInsertValues($attribute, $storeId);
+                    $result = $this->getInsertValues($attribute, $storeId);
                     $data = array_merge($data, $result);
                 }
             }
         }
 
         if (!empty($attributeId)) {
-            $this->_saveData($data, array("`attribute_id` = ?" => $attributeId));
+            $this->saveData($data, array("`attribute_id` = ?" => $attributeId));
         } else {
-            $this->_saveData($data);
+            $this->saveData($data);
         }
 
         return $this;
@@ -75,8 +75,9 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
      *
      * @param array $data
      * @param array $deleteWhere
+     * @throws Exception
      */
-    protected function _saveData(array $data, array $deleteWhere = array())
+    protected function saveData(array $data, array $deleteWhere = array())
     {
         // Continue only if we have something to insert
         if (empty($data)) {
@@ -101,9 +102,10 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
     /**
      * Retrieve product attributes with frontend input type 'select' and 'multiselect'
      *
+     * @param int|null $attributeId
      * @return Mage_Eav_Model_Resource_Entity_Attribute_Collection
      */
-    protected function _getAttributes($attributeId = null)
+    protected function getAttributes($attributeId = null)
     {
         $collection = Mage::getSingleton('eav/config')
             ->getEntityType(Mage_Catalog_Model_Product::ENTITY)
@@ -124,9 +126,8 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
      * @param int $storeId
      * @return array
      */
-    protected function _getInsertValues($attribute, $storeId)
+    protected function getInsertValues($attribute, $storeId)
     {
-
         $collection = Mage::getResourceModel('eav/entity_attribute_option_collection')
             ->setStoreFilter($storeId)
             ->setPositionOrder('asc')
@@ -136,21 +137,21 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
 
         $data = array();
         foreach ($options as $option) {
-            // Generate url key
-            $urlKey = $this->_getHelper()->transliterate($option['label']);
+            // Generate url value
+            $urlValue = $this->getHelper()->transliterate($option['label']);
 
             // Check if this url key is taken and add -{count}
             $count = 0;
-            $origUrlKey = $urlKey;
+            $origUrlValue = $urlValue;
             do {
                 $found = false;
                 foreach ($data as $line) {
-                    if ($line['url_key'] == $urlKey) {
+                    if ($line['url_value'] == $urlValue) {
                         $found = true;
                     }
                 }
                 if ($found) {
-                    $urlKey = $origUrlKey . '-' . ++$count;
+                    $urlValue = $origUrlValue . '-' . ++$count;
                 }
             } while ($found);
 
@@ -159,7 +160,8 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
                 'attribute_id' => $attribute->getId(),
                 'store_id' => $storeId,
                 'option_id' => $option['value'],
-                'url_key' => $urlKey
+                'url_key' => $this->getHelper()->transliterate($attribute->getStoreLabel($storeId)),
+                'url_value' => $urlValue,
             );
         }
 
@@ -171,17 +173,17 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
      *
      * @return array
      */
-    protected function _getAllStoresIds()
+    protected function getAllStoresIds()
     {
-        if ($this->_storesIds === null) {
-            $this->_storesIds = array();
+        if ($this->storesIds === null) {
+            $this->storesIds = array();
             $stores = Mage::app()->getStores();
             foreach ($stores as $storeId => $store) {
-                $this->_storesIds[] = $storeId;
+                $this->storesIds[] = $storeId;
             }
         }
 
-        return $this->_storesIds;
+        return $this->storesIds;
     }
 
     /**
@@ -189,13 +191,13 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
      *
      * @return Catalin_SEO_Helper_Data
      */
-    protected function _getHelper()
+    protected function getHelper()
     {
-        if ($this->_helper === null) {
-            $this->_helper = Mage::helper('catalin_seo');
+        if ($this->helper === null) {
+            $this->helper = Mage::helper('catalin_seo');
         }
 
-        return $this->_helper;
+        return $this->helper;
     }
 
     /**

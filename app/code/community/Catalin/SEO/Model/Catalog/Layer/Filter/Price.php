@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Model_Catalog_Layer_Filter_Price extends Mage_Catalog_Model_Layer_Filter_Price
@@ -25,7 +25,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Price extends Mage_Catalog_Model_La
     public function getMaxPriceFloat()
     {
         if (!$this->hasData('max_price_float')) {
-            $this->_collectPriceRange();
+            $this->collectPriceRange();
         }
 
         return $this->getData('max_price_float');
@@ -39,7 +39,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Price extends Mage_Catalog_Model_La
     public function getMinPriceFloat()
     {
         if (!$this->hasData('min_price_float')) {
-            $this->_collectPriceRange();
+            $this->collectPriceRange();
         }
 
         return $this->getData('min_price_float');
@@ -50,7 +50,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Price extends Mage_Catalog_Model_La
      *
      * @return Catalin_SEO_Model_Catalog_Layer_Filter_Price
      */
-    protected function _collectPriceRange()
+    protected function collectPriceRange()
     {
         $collection = $this->getLayer()->getProductCollection();
         $select = $collection->getSelect();

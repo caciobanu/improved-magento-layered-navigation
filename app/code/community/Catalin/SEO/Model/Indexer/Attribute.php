@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Model_Indexer_Attribute extends Mage_Index_Model_Indexer_Abstract
@@ -46,6 +46,7 @@ class Catalin_SEO_Model_Indexer_Attribute extends Mage_Index_Model_Indexer_Abstr
      * Register indexer required data inside event object
      *
      * @param   Mage_Index_Model_Event $event
+     * @return $this
      */
     protected function _registerEvent(Mage_Index_Model_Event $event)
     {

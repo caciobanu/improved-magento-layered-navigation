@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
@@ -46,7 +46,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     }
 
     /**
-     * Check if multipe choice filters is enabled
+     * Check if multiple choice filters is enabled
      * 
      * @return boolean
      */
@@ -115,7 +115,6 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
      * Method to get url for layered navigation
      * 
      * @param array $filters      array with new filter values
-     * @param integer $escape     to autoescape or not
      * @param boolean $noFilters  to add filters to the url or not
      * @param array $q            array with values to add to query string
      * @return string
@@ -157,7 +156,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         $urlParts = explode('?', $url);
 
         $urlParts[0] = substr($urlParts[0], 0, strlen($urlParts[0]) - strlen($suffix));
-        // Add the suffix to the url - fixes when comming from non suffixed pages
+        // Add the suffix to the url - fixes when coming from non suffixed pages
         // It should always be the last bits in the URL
         $urlParts[0] .= $this->getRoutingSuffix();
 
@@ -208,11 +207,12 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
      * Check if a string has utf8 characters in it
      *
      * @param  string $string
-     * @return boolean $bool
+     * @return boolean
      */
     public function seemsUtf8($string)
     {
-        for ($i = 0; $i < strlen($string); $i++) {
+        $length = strlen($string);
+        for ($i = 0; $i < $length; $i++) {
             if (ord($string[$i]) < 0x80) {
                 continue; # 0bbbbbbb
             } elseif ((ord($string[$i]) & 0xE0) == 0xC0) {
@@ -240,8 +240,8 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     /**
      * Remove any illegal characters, accents, etc.
      *
-     * @param  string $string  String to unaccent
-     * @return string $string  Unaccented string
+     * @param  string $string String to unaccent
+     * @return string Unaccented string
      */
     public function unaccent($string)
     {
@@ -386,8 +386,8 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
      * characters to - it uses a PHP output buffer to do this - it means, memory use will increase,
      * requiring up to the same amount again as the input string
      *
-     * @param string UTF-8 string to convert
-     * @param string (default = ?) Character use if character unknown
+     * @param string $str UTF-8 string to convert
+     * @param string $unknown Character use if character unknown
      * @return string US-ASCII string
      */
     public function utf8ToAscii($str, $unknown = '?')
@@ -479,7 +479,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
      * Tests a string as to whether it's valid UTF-8 and supported by the
      * Unicode standard
      * 
-     * @param string UTF-8 encoded string
+     * @param string $str UTF-8 encoded string
      * @return boolean true if valid
      */
     public function validUtf8($str)

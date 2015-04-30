@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Block_Catalog_Layer_Filter_Price extends Mage_Catalog_Block_Layer_Filter_Price
@@ -59,8 +59,8 @@ class Catalin_SEO_Block_Catalog_Layer_Filter_Price extends Mage_Catalog_Block_La
      */
     public function getCurrentMinPriceFilter()
     {
-        list($from, $to) = $this->_filter->getInterval();
-        $from = floor((float) $from);
+        $interval = $this->_filter->getInterval();
+        $from = floor((float) $interval[0]);
 
         if ($from < $this->getMinPriceFloat()) {
             return $this->getMinPriceFloat();
@@ -76,8 +76,8 @@ class Catalin_SEO_Block_Catalog_Layer_Filter_Price extends Mage_Catalog_Block_La
      */
     public function getCurrentMaxPriceFilter()
     {
-        list($from, $to) = $this->_filter->getInterval();
-        $to = round((float) $to);
+        $interval = $this->_filter->getInterval();
+        $to = round((float) $interval[1]);
 
         if ($to == 0 || $to > $this->getMaxPriceFloat()) {
             return $this->getMaxPriceFloat();

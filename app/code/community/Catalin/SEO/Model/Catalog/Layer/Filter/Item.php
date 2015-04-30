@@ -11,20 +11,20 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Model_Layer_Filter_Item
 {
 
-    protected $_helper;
+    protected $helper;
 
-    protected function _helper()
+    protected function helper()
     {
-        if ($this->_helper === null) {
-            $this->_helper = Mage::helper('catalin_seo');
+        if ($this->helper === null) {
+            $this->helper = Mage::helper('catalin_seo');
         }
-        return $this->_helper;
+        return $this->helper;
     }
 
     /**
@@ -34,7 +34,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Model_Lay
      */
     public function getUrl()
     {
-        if (!$this->_helper()->isEnabled()) {
+        if (!$this->helper()->isEnabled()) {
             return parent::getUrl();
         }
 
@@ -48,7 +48,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Model_Lay
             $values = $this->getValue();
         }
 
-        if ($this->_helper()->isCatalogSearch()) {
+        if ($this->helper()->isCatalogSearch()) {
             $query = array(
                 'isLayerAjax' => null,
                 $this->getFilter()->getRequestVar() => $values,
@@ -57,7 +57,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Model_Lay
             return Mage::getUrl('*/*/*', array('_current' => true, '_use_rewrite' => true, '_query' => $query));
         }
 
-        return $this->_helper()->getFilterUrl(array(
+        return $this->helper()->getFilterUrl(array(
             $this->getFilter()->getRequestVar() => $values
         ));
     }
@@ -69,7 +69,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Model_Lay
      */
     public function getRemoveUrl()
     {
-        if (!$this->_helper()->isEnabled()) {
+        if (!$this->helper()->isEnabled()) {
             return parent::getRemoveUrl();
         }
 
@@ -84,7 +84,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Model_Lay
         } else {
             $values = null;
         }
-        if ($this->_helper()->isCatalogSearch()) {
+        if ($this->helper()->isCatalogSearch()) {
             $query = array(
                 'isLayerAjax' => null,
                 $this->getFilter()->getRequestVar() => $values
@@ -96,7 +96,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Model_Lay
             return Mage::getUrl('*/*/*', $params);
         }
 
-        return $this->_helper()->getFilterUrl(array(
+        return $this->helper()->getFilterUrl(array(
             $this->getFilter()->getRequestVar() => $values
         ));
     }

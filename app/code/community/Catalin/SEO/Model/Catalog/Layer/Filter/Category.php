@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Model_Catalog_Layer_Filter_Category extends Mage_Catalog_Model_Layer_Filter_Category
@@ -23,7 +23,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Category extends Mage_Catalog_Model
      * @param Mage_Catalog_Model_Category $category
      * @return Varien_Data_Collection_Db
      */
-    protected function _getChildrenCategories(Mage_Catalog_Model_Category $category)
+    protected function getChildrenCategories(Mage_Catalog_Model_Category $category)
     {
         $collection = $category->getCollection();
         $collection->addAttributeToSelect('url_key')
@@ -52,9 +52,9 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Category extends Mage_Catalog_Model
         $data = $this->getLayer()->getAggregator()->getCacheData($key);
 
         if ($data === null) {
-            $categoty = $this->getCategory();
-            /** @var $categoty Mage_Catalog_Model_Category */
-            $categories = $this->_getChildrenCategories($categoty);
+            $currentCategory = $this->getCategory();
+            /** @var $currentCategory Mage_Catalog_Model_Category */
+            $categories = $this->getChildrenCategories($currentCategory);
 
             $this->getLayer()->getProductCollection()
                 ->addCountToCategories($categories);

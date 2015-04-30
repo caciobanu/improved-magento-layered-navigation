@@ -11,7 +11,7 @@
  * http://opensource.org/licenses/osl-3.0.php
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2013 Catalin Ciobanu
+ * @copyright   Copyright (c) 2015 Catalin Ciobanu
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Catalin_SEO_Model_Resource_Attribute_Urlkey extends Mage_Core_Model_Resource_Db_Abstract
@@ -29,18 +29,36 @@ class Catalin_SEO_Model_Resource_Attribute_Urlkey extends Mage_Core_Model_Resour
     }
 
     /**
-     * Retrieve urk_key for specific option
+     * Retrieve urk_key for specific attribute code
+     *
+     * @param string $attributeCode
+     * @param int $storeId
+     * @return string
+     */
+    public function getUrlKey($attributeCode, $storeId = null)
+    {
+        foreach ($this->getAttributeData($storeId, $attributeCode, 'attribute_code') as $result) {
+            if ($result['attribute_code'] == $attributeCode) {
+                return $result['url_key'];
+            }
+        }
+
+        return $attributeCode;
+    }
+
+    /**
+     * Retrieve url_value for specific option
      *
      * @param int $attributeId
      * @param int $optionId
      * @param int $storeId
      * @return int|string
      */
-    public function getUrlKey($attributeId, $optionId, $storeId = null)
+    public function getUrlValue($attributeId, $optionId, $storeId = null)
     {
-        foreach ($this->_getOptions($attributeId, $storeId) as $result) {
+        foreach ($this->getAttributeData($storeId, $attributeId) as $result) {
             if ($result['option_id'] == $optionId) {
-                return $result['url_key'];
+                return $result['url_value'];
             }
         }
 
@@ -48,50 +66,55 @@ class Catalin_SEO_Model_Resource_Attribute_Urlkey extends Mage_Core_Model_Resour
     }
 
     /**
-     * Retrieve option_id for specific url_key
+     * Retrieve option_id for specific url_value
      * 
      * @param int $attributeId
-     * @param string $urlKey
+     * @param string $urlValue
      * @param int $storeId
      * @return int|string
      */
-    public function getOptionId($attributeId, $urlKey, $storeId = null)
+    public function getOptionId($attributeId, $urlValue, $storeId = null)
     {
-        foreach ($this->_getOptions($attributeId, $storeId) as $result) {
-            if ($result['url_key'] == $urlKey) {
+        foreach ($this->getAttributeData($storeId, $attributeId) as $result) {
+            if ($result['url_value'] == $urlValue) {
                 return $result['option_id'];
             }
         }
 
-        return $urlKey;
+        return $urlValue;
     }
 
     /**
-     * Retrieve options url keys for specific attribute
-     * Use this as it caches for each attribute all possible values
-     * 
-     * @param int $attributeId
+     * Retrieve attribute data
+     *
      * @param int $storeId
+     * @param int|string $whereValue
+     * @param string $whereField
      * @return array
      */
-    protected function _getOptions($attributeId, $storeId)
+    protected function getAttributeData($storeId, $whereValue, $whereField = 'attribute_id')
     {
         if ($storeId === null) {
             $storeId = Mage::app()->getStore()->getId();
         }
 
-        if (!isset(self::$_cachedResults[$attributeId][$storeId])) {
+        if (!isset(self::$_cachedResults[$whereValue][$storeId])) {
             $readAdapter = $this->_getReadAdapter();
             $select = $readAdapter->select()
                 ->from($this->getMainTable())
                 ->where('`store_id` = ?', $storeId)
-                ->where("`attribute_id` = ?", $attributeId);
+                ->where("`{$whereField}` = ?", $whereValue);
             $data = $readAdapter->fetchAll($select);
 
-            self::$_cachedResults[$attributeId][$storeId] = $data;
+            if (!empty($data)) {
+                self::$_cachedResults[$data['attribute_id']][$storeId] = $data;
+                self::$_cachedResults[$data['attribute_code']][$storeId] = $data;
+            } else {
+                self::$_cachedResults[$whereValue][$storeId] = $data;
+            }
         }
 
-        return self::$_cachedResults[$attributeId][$storeId];
+        return self::$_cachedResults[$whereValue][$storeId];
     }
 
     /**
@@ -124,13 +147,15 @@ class Catalin_SEO_Model_Resource_Attribute_Urlkey extends Mage_Core_Model_Resour
         $data = $readAdapter->fetchAll($select);
         foreach ($data as $attr) {
             self::$_cachedResults[$attr['attribute_id']][$attr['store_id']][] = $attr;
+            self::$_cachedResults[$attr['attribute_code']][$attr['store_id']][] = $attr;
         }
 
         // Fill with empty array for the attributes ids that have no values in database
-        // Prevents from doing suplimentary querys
-        foreach ($attributesIds as $attributeId) {
-            if (!isset(self::$_cachedResults[$attributeId][$storeId])) {
-                self::$_cachedResults[$attributeId][$storeId] = array();
+        // Prevents from doing supplementary queries
+        foreach ($collection as $attribute) {
+            if (!isset(self::$_cachedResults[$attribute->getId()][$storeId])) {
+                self::$_cachedResults[$attribute->getId()][$storeId] = array();
+                self::$_cachedResults[$attribute->getAttributeCode()][$storeId] = array();
             }
         }
 
