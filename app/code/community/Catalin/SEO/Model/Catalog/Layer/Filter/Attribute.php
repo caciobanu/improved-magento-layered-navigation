@@ -77,7 +77,6 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Mode
         }
 
         $attribute = $this->getAttributeModel();
-        //$this->_requestVar = $attribute->getAttributeCode();
 
         $key = $this->getLayer()->getStateKey() . '_' . $this->_requestVar;
         $data = $this->getLayer()->getAggregator()->getCacheData($key);
