@@ -1,0 +1,9 @@
+{
+  "name": "catalin/seo",
+  "type": "magento-module",
+  "description": "Layered Navigation SEO: ajax, seo urls, price slider, multiple filters for the same attribute.",
+  "homepage": "https://github.com/caciobanu/improved-magento-layered-navigation",
+  "require": {
+    "magento-hackathon/magento-composer-installer": "*"
+  }
+}
