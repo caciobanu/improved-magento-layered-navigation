@@ -55,7 +55,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         if (!$this->isEnabled()) {
             return false;
         }
-        return Mage::getStoreConfigFlag('catalin_seo/catalog/multiple_choise_filters');
+        return Mage::getStoreConfigFlag('catalin_seo/catalog/multiple_choice_filters');
     }
 
     /**
