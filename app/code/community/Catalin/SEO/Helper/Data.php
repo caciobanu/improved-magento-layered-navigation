@@ -456,4 +456,13 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         return trim($text, $separator);
     }
 
+    public function getSkinJsUrl()
+    {
+        if(Mage::getEdition() == Mage::EDITION_ENTERPRISE){
+            return "js/catalin_seo/handler-ee-rwd.js";
+        }
+
+        return "js/catalin_seo/handler.js";
+    }
+
 }
