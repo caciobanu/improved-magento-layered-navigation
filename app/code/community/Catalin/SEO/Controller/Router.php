@@ -53,12 +53,20 @@ class Catalin_SEO_Controller_Router extends Mage_Core_Controller_Varien_Router_S
             return false;
         }
 
-        $urlRewrite = Mage::getModel('core/url_rewrite');
-        $urlRewrite->setStoreId(Mage::app()->getStore()->getId());
-        $cat = $urlSplit[0];
+        if(Mage::getEdition() == Mage::EDITION_ENTERPRISE){
+            $urlRewrite = Mage::getModel('enterprise_urlrewrite/url_rewrite');
+            $urlRequest = Mage::getModel('enterprise_urlrewrite/url_rewrite_request');
+        } else {
+            $urlRewrite = Mage::getModel('core/url_rewrite');
+        }
 
+        $urlRewrite->setStoreId(Mage::app()->getStore()->getId());
+
+        // Massage path to load proper request path
+        $cat = $urlSplit[0];
         $catPath = $cat . $suffix;
-        $urlRewrite->loadByRequestPath($catPath);
+        $paths = $urlRequest->getSystemPaths($catPath);
+        $urlRewrite->loadByRequestPath($paths);
 
         // Check if a valid category is found
         if ($urlRewrite->getId()) {
@@ -95,6 +103,8 @@ class Catalin_SEO_Controller_Router extends Mage_Core_Controller_Varien_Router_S
             if (!$found) {
                 return false;
             }
+
+
             
             // Set the required data on $request object
             $request->setPathInfo($urlRewrite->getTargetPath());
@@ -107,6 +117,13 @@ class Catalin_SEO_Controller_Router extends Mage_Core_Controller_Varien_Router_S
                 ->setAlias(
                     Mage_Core_Model_Url_Rewrite::REWRITE_REQUEST_PATH_ALIAS, $catPath
             );
+
+
+            // EE does not have category ID in enteprise_url_rewrite table
+            if(Mage::getEdition() == Mage::EDITION_ENTERPRISE){
+                list($pathPrefix, $targetPath) = explode('/category/view/id/',$urlRewrite->getTargetPath());
+                $request->setParam('id', $targetPath);
+            }
 
             // Parse url params
             $params = explode('/', trim($urlSplit[1], '/'));

@@ -22,6 +22,9 @@
                     <layer_filter_attribute>Catalin_SEO_Model_CatalogSearch_Layer_Filter_Attribute</layer_filter_attribute>
                 </rewrite>
             </catalogsearch>
+            <enterprise_search>
+                    <catalog_layer_filter_attribute>Catalin_SEO_Model_Enterprise_Catalog_Layer_Filter_Attribute</catalog_layer_filter_attribute>
+            </enterprise_search>
             <catalog_resource>
                 <rewrite>
                     <layer_filter_attribute>Catalin_SEO_Model_Catalog_Resource_Layer_Filter_Attribute</layer_filter_attribute>
@@ -62,6 +65,12 @@
                     <layer_filter_attribute>Catalin_SEO_Block_CatalogSearch_Layer_Filter_Attribute</layer_filter_attribute>
                 </rewrite>
             </catalogsearch>
+            <enterprise_search>
+                <rewrite>
+                    <catalog_layer_filter_attribute>Catalin_SEO_Block_Enterprise_Catalog_Layer_Filter_Attribute</catalog_layer_filter_attribute>
+                    <catalogsearch_layer_filter_attribute>Catalin_SEO_Block_Enterprise_CatalogSearch_Layer_Filter_Attribute</catalogsearch_layer_filter_attribute>
+                </rewrite>
+            </enterprise_search>
             <catalin_seo>
                 <class>Catalin_SEO_Block</class>
             </catalin_seo>
@@ -120,7 +129,7 @@
                 <enabled>1</enabled>
                 <ajax_enabled>1</ajax_enabled>
                 <price_slider>1</price_slider>
-                <multiple_choise_filters>1</multiple_choise_filters>
+                <multiple_choice_filters>1</multiple_choice_filters>
                 <routing_suffix>filter</routing_suffix>
             </catalog>
         </catalin_seo>

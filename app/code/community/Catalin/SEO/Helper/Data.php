@@ -55,7 +55,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         if (!$this->isEnabled()) {
             return false;
         }
-        return Mage::getStoreConfigFlag('catalin_seo/catalog/multiple_choise_filters');
+        return Mage::getStoreConfigFlag('catalin_seo/catalog/multiple_choice_filters');
     }
 
     /**
@@ -454,6 +454,15 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         $text = strtolower(preg_replace('/[^A-Z^a-z^0-9^\/]+/', $separator, preg_replace('/([a-z\d])([A-Z])/', '\1_\2', preg_replace('/([A-Z]+)([A-Z][a-z])/', '\1_\2', preg_replace('/::/', '/', $text)))));
 
         return trim($text, $separator);
+    }
+
+    public function getSkinJsUrl()
+    {
+        if(Mage::getEdition() == Mage::EDITION_ENTERPRISE){
+            return "js/catalin_seo/handler-ee-rwd.js";
+        }
+
+        return "js/catalin_seo/handler.js";
     }
 
 }

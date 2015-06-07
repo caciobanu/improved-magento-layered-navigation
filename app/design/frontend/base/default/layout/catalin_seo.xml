@@ -12,7 +12,7 @@
             </action>
             <action method="addItem">
                 <type>skin_js</type>
-                <name>js/catalin_seo/handler.js</name>
+                <name helper="catalin_seo/getSkinJsUrl"/>
             </action>
         </reference>
         <reference name="product_list_toolbar">
@@ -21,6 +21,11 @@
         <reference name="product_list">
             <action method="setTemplate">
                 <template>catalin_seo/catalog/product/list.phtml</template>
+            </action>
+        </reference>
+        <reference name="enterprisecatalog.leftnav">
+            <action method="setTemplate">
+                <template>catalin_seo/catalog/layer/view.phtml</template>
             </action>
         </reference>
         <reference name="catalog.leftnav">
@@ -55,6 +60,11 @@
         <reference name="search_result_list">
             <action method="setTemplate">
                 <template>catalin_seo/catalog/product/list.phtml</template>
+            </action>
+        </reference>
+        <reference name="enterprisesearch.leftnav">
+            <action method="setTemplate">
+                <template>catalin_seo/catalog/layer/view.phtml</template>
             </action>
         </reference>
         <reference name="catalogsearch.leftnav">
