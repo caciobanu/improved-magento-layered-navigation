@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Catalin Ciobanu
  *
@@ -53,20 +52,22 @@ class Catalin_SEO_Controller_Router extends Mage_Core_Controller_Varien_Router_S
             return false;
         }
 
-        if(Mage::getEdition() == Mage::EDITION_ENTERPRISE){
-            $urlRewrite = Mage::getModel('enterprise_urlrewrite/url_rewrite');
-            $urlRequest = Mage::getModel('enterprise_urlrewrite/url_rewrite_request');
-        } else {
-            $urlRewrite = Mage::getModel('core/url_rewrite');
-        }
-
-        $urlRewrite->setStoreId(Mage::app()->getStore()->getId());
-
         // Massage path to load proper request path
         $cat = $urlSplit[0];
         $catPath = $cat . $suffix;
-        $paths = $urlRequest->getSystemPaths($catPath);
-        $urlRewrite->loadByRequestPath($paths);
+
+        if(Mage::getEdition() == Mage::EDITION_ENTERPRISE){
+            $urlRequest = Mage::getModel('enterprise_urlrewrite/url_rewrite_request');
+            $paths = $urlRequest->getSystemPaths($catPath);
+
+            $urlRewrite = Mage::getModel('enterprise_urlrewrite/url_rewrite');
+            $urlRewrite->setStoreId(Mage::app()->getStore()->getId());
+            $urlRewrite->loadByRequestPath($paths);
+        } else {
+            $urlRewrite = Mage::getModel('core/url_rewrite');
+            $urlRewrite->setStoreId(Mage::app()->getStore()->getId());
+            $urlRewrite->loadByRequestPath($catPath);
+        }
 
         // Check if a valid category is found
         if ($urlRewrite->getId()) {
