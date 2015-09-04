@@ -155,12 +155,17 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
         $urlParts = explode('?', $url);
 
-        $urlParts[0] = substr($urlParts[0], 0, strlen($urlParts[0]) - strlen($suffix));
+        $lenSuffix = (strlen($suffix) > 0?strlen($suffix)+1:0);
+        $urlParts[0] = substr($urlParts[0], 0, strlen($urlParts[0]) - $lenSuffix);
         // Add the suffix to the url - fixes when coming from non suffixed pages
         // It should always be the last bits in the URL
         $urlParts[0] .= $this->getRoutingSuffix();
 
-        $url = $urlParts[0] . $urlPath . $suffix;
+        $url = $urlParts[0] . $urlPath;
+        if ($lenSuffix) {
+            $url .= '.'.$suffix;
+        }
+
         if (!empty($urlParts[1])) {
             $url .= '?' . $urlParts[1];
         }
