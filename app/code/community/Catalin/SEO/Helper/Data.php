@@ -163,7 +163,6 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
         $url = $urlParts[0] . $urlPath;
         $url = $this->appendSuffix($url, $suffix);
-
         if (!empty($urlParts[1])) {
             $url .= '?' . $urlParts[1];
         }
@@ -175,7 +174,6 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
      * Get the url path, including the base url, minus the suffix.
      * Checks for Enterprise and if it is, checks for the dot
      * before returning
-     * 
      * @param  string $suffix
      * @param  srting $urlParts
      * @return string
@@ -190,7 +188,9 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     }
 
     /**
-     * Appends the suffix to the url, if applicable
+     * Appends the suffix to the url, if applicable.
+     * Checks for Enterprise and if it is, adds the dot
+     * before returning
      * 
      * @param  string $url
      * @param  string $suffix
@@ -200,7 +200,8 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         if (strlen($suffix) == 0) {
             return;
         }
-        return $url . '.' . $suffix;
+        if (Mage::getEdition() == Mage::EDITION_ENTERPRISE ? $ds = "." : $ds="");
+        return $url . $ds . $suffix;
     }
 
     /**
