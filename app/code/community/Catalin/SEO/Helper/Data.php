@@ -155,17 +155,53 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
         $urlParts = explode('?', $url);
 
-        $urlParts[0] = substr($urlParts[0], 0, strlen($urlParts[0]) - strlen($suffix));
+        $urlParts[0] = $this->getUrlBody($suffix, $urlParts[0]);
+
         // Add the suffix to the url - fixes when coming from non suffixed pages
         // It should always be the last bits in the URL
         $urlParts[0] .= $this->getRoutingSuffix();
 
-        $url = $urlParts[0] . $urlPath . $suffix;
+        $url = $urlParts[0] . $urlPath;
+        $url = $this->appendSuffix($url, $suffix);
         if (!empty($urlParts[1])) {
             $url .= '?' . $urlParts[1];
         }
 
         return $url;
+    }
+
+    /**
+     * Get the url path, including the base url, minus the suffix.
+     * Checks for Enterprise and if it is, checks for the dot
+     * before returning
+     * @param  string $suffix
+     * @param  srting $urlParts
+     * @return string
+     */
+    public function getUrlBody($suffix, $urlParts) {
+        if (Mage::getEdition() == Mage::EDITION_ENTERPRISE) {
+            $lenSuffix = (strlen($suffix) > 0 ? strlen($suffix) + 1 : 0);
+            return substr($urlParts, 0, strlen($urlParts) - $lenSuffix);
+        } else {
+            return substr($urlParts, 0, strlen($urlParts) - strlen($suffix));
+        }
+    }
+
+    /**
+     * Appends the suffix to the url, if applicable.
+     * Checks for Enterprise and if it is, adds the dot
+     * before returning
+     * 
+     * @param  string $url
+     * @param  string $suffix
+     * @return string
+     */
+    public function appendSuffix($url, $suffix) {
+        if (strlen($suffix) == 0) {
+            return;
+        }
+        if (Mage::getEdition() == Mage::EDITION_ENTERPRISE ? $ds = "." : $ds="");
+        return $url . $ds . $suffix;
     }
 
     /**
