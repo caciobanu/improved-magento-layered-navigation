@@ -24,7 +24,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Check if module is enabled or not
-     * 
+     *
      * @return boolean
      */
     public function isEnabled()
@@ -34,7 +34,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Check if ajax is enabled
-     * 
+     *
      * @return boolean
      */
     public function isAjaxEnabled()
@@ -47,7 +47,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Check if multiple choice filters is enabled
-     * 
+     *
      * @return boolean
      */
     public function isMultipleChoiceFiltersEnabled()
@@ -60,7 +60,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Check if price slider is enabled
-     * 
+     *
      * @return boolean
      */
     public function isPriceSliderEnabled()
@@ -73,7 +73,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Retrieve routing suffix
-     * 
+     *
      * @return string
      */
     public function getRoutingSuffix()
@@ -84,7 +84,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     /**
      * Getter for layered navigation params
      * If $params are provided then it overrides the ones from registry
-     * 
+     *
      * @param array $params
      * @return array|null
      */
@@ -113,7 +113,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Method to get url for layered navigation
-     * 
+     *
      * @param array $filters      array with new filter values
      * @param boolean $noFilters  to add filters to the url or not
      * @param array $q            array with values to add to query string
@@ -191,14 +191,14 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
      * Appends the suffix to the url, if applicable.
      * Checks for Enterprise and if it is, adds the dot
      * before returning
-     * 
+     *
      * @param  string $url
      * @param  string $suffix
      * @return string
      */
     public function appendSuffix($url, $suffix) {
         if (strlen($suffix) == 0) {
-            return;
+            return $url;
         }
         if (Mage::getEdition() == Mage::EDITION_ENTERPRISE ? $ds = "." : $ds="");
         return $url . $ds . $suffix;
@@ -206,7 +206,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Get the url to clear all layered navigation filters
-     * 
+     *
      * @return string
      */
     public function getClearFiltersUrl()
@@ -216,7 +216,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Get url for layered navigation pagination
-     * 
+     *
      * @param array $query
      * @return string
      */
@@ -227,7 +227,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Check if we are in the catalog search
-     * 
+     *
      * @return boolean
      */
     public function isCatalogSearch()
@@ -359,7 +359,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     /**
      * Tests a string as to whether it's valid UTF-8 and supported by the
      * Unicode standard
-     * 
+     *
      * @param string $str UTF-8 encoded string
      * @return boolean true if valid
      */
