@@ -106,6 +106,8 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
             }
         }
 
+        unset($layerParams['isLayerAjax']);
+
         // Sort by key - small SEO improvement
         ksort($layerParams);
         return $layerParams;

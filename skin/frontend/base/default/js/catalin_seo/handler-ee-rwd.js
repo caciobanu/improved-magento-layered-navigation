@@ -1,4 +1,5 @@
 var CatalinSeoHandler = {
+    urlSuffix: null,
     listenersBinded: false,
     isAjaxEnabled: false,
     priceSlider: {
@@ -30,11 +31,22 @@ var CatalinSeoHandler = {
             url = $(el).getValue();
         }
 
-        // Add this to query string for full page caching systems
-        if (url.indexOf('?') != -1) {
-            fullUrl = url + '&isLayerAjax=1';
+        var suffix = CatalinSeoHandler.urlSuffix;
+        if (suffix !== null && url.substr(-suffix.length) == suffix) {
+            // Add to the query url so that FPC handles correctly.
+            var urlWithoutSuffix = url.substr(0, url.length - suffix.length);
+            if (urlWithoutSuffix.indexOf("/filter") == -1) {
+                fullUrl = urlWithoutSuffix + "/filter/isLayerAjax/1" + suffix;
+            } else {
+                fullUrl = urlWithoutSuffix + "/isLayerAjax/1" + suffix;
+            }
         } else {
-            fullUrl = url + '?isLayerAjax=1';
+            // Add this to query string for full page caching systems
+            if (url.indexOf('?') != -1) {
+                fullUrl = url + '&isLayerAjax=1';
+            } else {
+                fullUrl = url + '?isLayerAjax=1';
+            }
         }
 
         $('loading').show();
