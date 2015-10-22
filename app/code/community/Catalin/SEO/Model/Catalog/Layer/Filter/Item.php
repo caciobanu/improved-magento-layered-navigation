@@ -109,7 +109,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Item extends Mage_Catalog_Model_Lay
     public function isSelected()
     {
         $values = $this->getFilter()->getValues();
-        if (in_array($this->getValue(), $values)) {
+        if (is_array($values) && in_array($this->getValue(), $values)) {
             return true;
         }
         return false;
