@@ -110,10 +110,10 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
         $collection = Mage::getSingleton('eav/config')
             ->getEntityType(Mage_Catalog_Model_Product::ENTITY)
             ->getAttributeCollection()
-            ->addFieldToFilter('`main_table`.`frontend_input`', array('in' => array('select', 'multiselect')));
+            ->addFieldToFilter('main_table.frontend_input', array('in' => array('select', 'multiselect')));
         //->addSetInfo();
         if (!empty($attributeId)) {
-            $collection->addFieldToFilter('`main_table`.`attribute_id`', $attributeId);
+            $collection->addFieldToFilter('main_table.attribute_id', $attributeId);
         }
 
         return $collection;
