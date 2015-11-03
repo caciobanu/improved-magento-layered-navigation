@@ -71,11 +71,21 @@
                     <catalogsearch_layer_filter_attribute>Catalin_SEO_Block_Enterprise_CatalogSearch_Layer_Filter_Attribute</catalogsearch_layer_filter_attribute>
                 </rewrite>
             </enterprise_search>
+            <configurableswatches>
+                <rewrite>
+                    <catalog_layer_state_swatch>Catalin_SEO_Block_ConfigurableSwatches_Catalog_Layer_State_Swatch</catalog_layer_state_swatch>
+                </rewrite>
+            </configurableswatches>
             <catalin_seo>
                 <class>Catalin_SEO_Block</class>
             </catalin_seo>
         </blocks>
         <helpers>
+            <configurableswatches>
+                <rewrite>
+                    <productlist>Catalin_SEO_Helper_ConfigurableSwatches_Productlist</productlist>
+                </rewrite>
+            </configurableswatches>
             <catalin_seo>
                 <class>Catalin_SEO_Helper</class>
             </catalin_seo>
