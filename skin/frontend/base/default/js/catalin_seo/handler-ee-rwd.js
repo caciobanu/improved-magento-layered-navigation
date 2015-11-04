@@ -32,7 +32,7 @@ var CatalinSeoHandler = {
         }
 
         var suffix = CatalinSeoHandler.urlSuffix;
-        if (suffix !== null && url.substr(-suffix.length) == suffix) {
+        if (suffix !== null && (suffix.length === 0 || url.substr(-suffix.length) == suffix)) {
             // Add to the query url so that FPC handles correctly.
             var urlWithoutSuffix = url.substr(0, url.length - suffix.length);
             if (urlWithoutSuffix.indexOf("/filter") == -1) {
