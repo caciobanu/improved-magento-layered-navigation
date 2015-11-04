@@ -35,8 +35,8 @@ var CatalinSeoHandler = {
         if (suffix !== null && (suffix.length === 0 || url.substr(-suffix.length) == suffix)) {
             // Add to the query url so that FPC handles correctly.
             var urlWithoutSuffix = url.substr(0, url.length - suffix.length);
-            if (urlWithoutSuffix.indexOf("/filter") == -1) {
-                fullUrl = urlWithoutSuffix + "/filter/isLayerAjax/1" + suffix;
+            if (urlWithoutSuffix.indexOf(CatalinSeoHandler.routingSuffix) == -1) {
+                fullUrl = urlWithoutSuffix + CatalinSeoHandler.routingSuffix + "/isLayerAjax/1" + suffix;
             } else {
                 fullUrl = urlWithoutSuffix + "/isLayerAjax/1" + suffix;
             }
