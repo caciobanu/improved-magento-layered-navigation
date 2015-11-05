@@ -31,23 +31,7 @@ var CatalinSeoHandler = {
             url = $(el).getValue();
         }
 
-        var suffix = CatalinSeoHandler.urlSuffix;
-        if (suffix !== null && (suffix.length === 0 || url.substr(-suffix.length) == suffix)) {
-            // Add to the query url so that FPC handles correctly.
-            var urlWithoutSuffix = url.substr(0, url.length - suffix.length);
-            if (urlWithoutSuffix.indexOf(CatalinSeoHandler.routingSuffix) == -1) {
-                fullUrl = urlWithoutSuffix + CatalinSeoHandler.routingSuffix + "/isLayerAjax/1" + suffix;
-            } else {
-                fullUrl = urlWithoutSuffix + "/isLayerAjax/1" + suffix;
-            }
-        } else {
-            // Add this to query string for full page caching systems
-            if (url.indexOf('?') != -1) {
-                fullUrl = url + '&isLayerAjax=1';
-            } else {
-                fullUrl = url + '?isLayerAjax=1';
-            }
-        }
+        fullUrl = self.prepareAjaxUrl(url);
 
         $('loading').show();
         $('ajax-errors').hide();
@@ -78,6 +62,47 @@ var CatalinSeoHandler = {
         if (event) {
             event.preventDefault();
         }
+    },
+    prepareAjaxUrl: function (url) {
+        // In EE, the FPC caches response headers by request path, without query arguments.
+        // So, we need to vary the request path between HTML (category) responses and JSON responses.
+        var routingSuffix = CatalinSeoHandler.routingSuffix;
+        var urlSuffix = CatalinSeoHandler.urlSuffix;
+
+        if (url.indexOf('/isLayerAjax/1') != -1) {
+            return url;
+        }
+
+        // Can't use split since limit chops the result.
+        var prefixLength = routingSuffix.length === 0 ? -1 : url.indexOf(routingSuffix);
+        // We have a routing suffix in this link - let's add ajax right after that.
+        if (prefixLength !== -1) {
+            var prefix = url.substr(0, prefixLength + routingSuffix.length);
+            var suffix = url.substr(prefixLength + routingSuffix.length);
+            return prefix + '/isLayerAjax/1' + suffix;
+        }
+
+        // None, let's add before the question mark.
+        var questionMarkPos = url.indexOf('?');
+        if (questionMarkPos !== -1) {
+            var prefix = url.substr(0, questionMarkPos);
+            var suffix = url.substr(questionMarkPos);
+            // Move it before the urlSuffix, not before the question mark.
+            if (prefix.substr(prefix.length - urlSuffix.length) == urlSuffix) {
+                prefix = prefix.substr(0, prefix.length - urlSuffix.length);
+                suffix = urlSuffix + suffix;
+            }
+            return prefix + routingSuffix + '/isLayerAjax/1' + suffix;
+        }
+
+        // If it ends with the urlSuffix, append there.
+        if (url.substr(url.length - urlSuffix.length) == urlSuffix) {
+            var prefix = url.substr(0, url.length - urlSuffix.length);
+            return prefix + routingSuffix + '/isLayerAjax/1' + urlSuffix;
+        }
+
+        // Nothing, let's put it all together.
+        return url + routingSuffix + '/isLayerAjax/1' + urlSuffix;
     },
     pushState: function (data, link, replace) {
         var History = window.History;
