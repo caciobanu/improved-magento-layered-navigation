@@ -74,7 +74,7 @@
                             </depends>
                         </multiple_choice_filters>
                         <routing_suffix translate="label">
-                            <label>Routing Souffix</label>
+                            <label>Routing Suffix</label>
                             <frontend_type>text</frontend_type>
                             <comment>Used in url generation (it should be alphanumeric) - Do not use slash ( / )</comment>
                             <backend_model>catalin_seo/system_config_backend_seo_catalog</backend_model>
