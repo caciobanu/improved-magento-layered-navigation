@@ -128,12 +128,19 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
      */
     protected function getInsertValues($attribute, $storeId)
     {
-        $collection = Mage::getResourceModel('eav/entity_attribute_option_collection')
-            ->setStoreFilter($storeId)
-            ->setPositionOrder('asc')
-            ->setAttributeFilter($attribute->getId())
-            ->load();
-        $options = $collection->toOptionArray();
+        $options = array();
+
+        if ($attribute->getSourceModel()) {
+            $options = $attribute->getSource()->getAllOptions();
+        }
+        else {
+            $collection = Mage::getResourceModel('eav/entity_attribute_option_collection')
+                ->setStoreFilter($storeId)
+                ->setPositionOrder('asc')
+                ->setAttributeFilter($attribute->getId())
+                ->load();
+            $options = $collection->toOptionArray();
+        }
 
         $data = array();
         foreach ($options as $option) {
