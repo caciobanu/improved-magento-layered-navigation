@@ -100,7 +100,7 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
     }
 
     /**
-     * Retrieve product attributes with frontend input type 'select' and 'multiselect'
+     * Retrieve filterable product attributes with frontend input type 'select' and 'multiselect'
      *
      * @param int|null $attributeId
      * @return Mage_Eav_Model_Resource_Entity_Attribute_Collection
@@ -110,7 +110,8 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
         $collection = Mage::getSingleton('eav/config')
             ->getEntityType(Mage_Catalog_Model_Product::ENTITY)
             ->getAttributeCollection()
-            ->addFieldToFilter('main_table.frontend_input', array('in' => array('select', 'multiselect')));
+            ->addFieldToFilter('main_table.frontend_input', array('in' => array('select', 'multiselect')))
+            ->addFieldToFilter(array('is_filterable', 'is_filterable_in_search'), array(array('eq' => 1), array('eq' => 1)));
         //->addSetInfo();
         if (!empty($attributeId)) {
             $collection->addFieldToFilter('main_table.attribute_id', $attributeId);
@@ -128,12 +129,19 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
      */
     protected function getInsertValues($attribute, $storeId)
     {
-        $collection = Mage::getResourceModel('eav/entity_attribute_option_collection')
-            ->setStoreFilter($storeId)
-            ->setPositionOrder('asc')
-            ->setAttributeFilter($attribute->getId())
-            ->load();
-        $options = $collection->toOptionArray();
+        $options = array();
+
+        if ($attribute->getSourceModel()) {
+            $options = $attribute->getSource()->getAllOptions();
+        }
+        else {
+            $collection = Mage::getResourceModel('eav/entity_attribute_option_collection')
+                ->setStoreFilter($storeId)
+                ->setPositionOrder('asc')
+                ->setAttributeFilter($attribute->getId())
+                ->load();
+            $options = $collection->toOptionArray();
+        }
 
         $data = array();
         foreach ($options as $option) {
