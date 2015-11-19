@@ -107,8 +107,8 @@ class Catalin_SEO_Model_Resource_Attribute_Urlkey extends Mage_Core_Model_Resour
             $data = $readAdapter->fetchAll($select);
 
             if (!empty($data)) {
-                self::$_cachedResults[$data['attribute_id']][$storeId] = $data;
-                self::$_cachedResults[$data['attribute_code']][$storeId] = $data;
+                self::$_cachedResults[$data[0]['attribute_id']][$storeId] = $data;
+                self::$_cachedResults[$data[0]['attribute_code']][$storeId] = $data;
             } else {
                 self::$_cachedResults[$whereValue][$storeId] = $data;
             }
