@@ -177,7 +177,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
      * Checks for Enterprise and if it is, checks for the dot
      * before returning
      * @param  string $suffix
-     * @param  srting $urlParts
+     * @param  string $urlParts
      * @return string
      */
     public function getUrlBody($suffix, $urlParts) {

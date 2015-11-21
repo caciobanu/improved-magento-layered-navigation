@@ -102,13 +102,13 @@ class Catalin_SEO_Model_Resource_Attribute_Urlkey extends Mage_Core_Model_Resour
             $readAdapter = $this->_getReadAdapter();
             $select = $readAdapter->select()
                 ->from($this->getMainTable())
-                ->where('`store_id` = ?', $storeId)
-                ->where("`{$whereField}` = ?", $whereValue);
+                ->where('store_id = ?', $storeId)
+                ->where("{$whereField} = ?", $whereValue);
             $data = $readAdapter->fetchAll($select);
 
             if (!empty($data)) {
-                self::$_cachedResults[$data['attribute_id']][$storeId] = $data;
-                self::$_cachedResults[$data['attribute_code']][$storeId] = $data;
+                self::$_cachedResults[$data[0]['attribute_id']][$storeId] = $data;
+                self::$_cachedResults[$data[0]['attribute_code']][$storeId] = $data;
             } else {
                 self::$_cachedResults[$whereValue][$storeId] = $data;
             }
@@ -141,8 +141,8 @@ class Catalin_SEO_Model_Resource_Attribute_Urlkey extends Mage_Core_Model_Resour
         $readAdapter = $this->_getReadAdapter();
         $select = $readAdapter->select()
             ->from($this->getMainTable())
-            ->where('`store_id` = ?', $storeId)
-            ->where('`attribute_id` IN (?)', array('in' => $attributesIds));
+            ->where('store_id = ?', $storeId)
+            ->where('attribute_id IN (?)', array('in' => $attributesIds));
 
         $data = $readAdapter->fetchAll($select);
         foreach ($data as $attr) {
