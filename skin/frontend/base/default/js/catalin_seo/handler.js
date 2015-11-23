@@ -56,6 +56,9 @@ var CatalinSeoHandler = {
                     self.toggleContent();
                     self.alignProductGridActions();
                     self.blockCollapsing();
+                    if (ConfigurableSwatchesList) {
+                        ConfigurableSwatchesList.init();
+                    }
                 } else {
                     $('ajax-errors').show();
                 }
@@ -150,6 +153,9 @@ var CatalinSeoHandler = {
                         self.toggleContent();
                         self.alignProductGridActions();
                         self.blockCollapsing();
+                        if (ConfigurableSwatchesList) {
+                            ConfigurableSwatchesList.init();
+                        }
                     }
                 });
             })(window.History);
