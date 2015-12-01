@@ -52,8 +52,11 @@ var CatalinSeoHandler = {
                     self.toggleContent();
                     self.alignProductGridActions();
                     self.blockCollapsing();
+
                     if (ConfigurableSwatchesList) {
-                        ConfigurableSwatchesList.init();
+                        setTimeout(function(){
+                            $j(document).trigger('product-media-loaded');
+                        }, 0);
                     }
                 } else {
                     $('ajax-errors').show();
@@ -190,8 +193,11 @@ var CatalinSeoHandler = {
                         self.toggleContent();
                         self.alignProductGridActions();
                         self.blockCollapsing();
+
                         if (ConfigurableSwatchesList) {
-                            ConfigurableSwatchesList.init();
+                            setTimeout(function(){
+                                $j(document).trigger('product-media-loaded');
+                            }, 0);
                         }
                     }
                 });
