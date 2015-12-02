@@ -26,3 +26,8 @@ You can install this module using [Colin Mollenhour's](https://github.com/colinm
 $ modman init
 $ modman clone https://github.com/caciobanu/improved-magento-layered-navigation.git
 ```
+
+Contribution
+------------
+
+To contribute please issue pull requests to the `develop` branch _only_. New releases will be merged to feature branches. Bugfixes are hotfix patched to both `master` and `develop`.
