@@ -54,7 +54,7 @@
             </action>
             <action method="addItem">
                 <type>skin_js</type>
-                <name>js/catalin_seo/handler.js</name>
+                <name helper="catalin_seo/getSkinJsUrl"/>
             </action>
         </reference>
         <reference name="search_result_list">
