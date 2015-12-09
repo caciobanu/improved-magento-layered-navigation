@@ -5,6 +5,7 @@ $_swatchInnerWidth = $_dimHelper->getInnerWidth(Mage_ConfigurableSwatches_Helper
 $_swatchInnerHeight = $_dimHelper->getInnerHeight(Mage_ConfigurableSwatches_Helper_Swatchdimensions::AREA_LAYER);
 $_swatchOuterWidth = $_dimHelper->getOuterWidth(Mage_ConfigurableSwatches_Helper_Swatchdimensions::AREA_LAYER);
 $_swatchOuterHeight = $_dimHelper->getOuterHeight(Mage_ConfigurableSwatches_Helper_Swatchdimensions::AREA_LAYER);
+$_nofollow = Mage::helper('catalin_seo')->getNofollow();
 ?>
 
 <ol class="configurable-swatch-list">
@@ -20,7 +21,7 @@ $_swatchOuterHeight = $_dimHelper->getOuterHeight(Mage_ConfigurableSwatches_Help
         ?>
         <li<?php if ($_hasImage){ echo ' style="line-height: ' . $_lineHeight . 'px;"'; } ?>>
             <?php if ($_hasItems): ?>
-                <a href="<?php echo $this->urlEscape(($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl()) ?>" class="<?php echo $_linkClass ?>">
+                <a href="<?php echo $this->urlEscape(($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl()) ?>" class="<?php echo $_linkClass ?>" <?php echo $_nofollow; ?>>
             <?php else: ?>
                 <span class="<?php echo $_linkClass ?>">
             <?php endif; ?>

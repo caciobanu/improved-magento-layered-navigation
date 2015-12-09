@@ -21,6 +21,7 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
      */
 
     const MULTIPLE_FILTERS_DELIMITER = ',';
+    const REL_NOFOLLOW = 'rel="nofollow"';
 
     /**
      * Check if module is enabled or not
@@ -501,6 +502,13 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         }
 
         return "js/catalin_seo/handler.js";
+    }
+
+    public function getNofollow()
+    {
+        if(Mage::getStoreConfigFlag('catalin_seo/catalog/nofollow')){
+            return self::REL_NOFOLLOW;
+        }
     }
 
 }

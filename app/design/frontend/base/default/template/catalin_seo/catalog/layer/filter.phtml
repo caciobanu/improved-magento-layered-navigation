@@ -1,8 +1,11 @@
+<?php
+$_nofollow = Mage::helper('catalin_seo')->getNofollow();
+?>
 <ol>
     <?php foreach ($this->getItems() as $_item): ?>
         <li>
             <?php if ($_item->getCount() > 0): ?>
-                <a href="<?php echo ($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl() ?>">
+                <a href="<?php echo ($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl() ?>" <?php echo $_nofollow; ?> >
                     <input type="checkbox"<?php if ($_item->isSelected()): ?> checked="checked" <?php endif; ?>/>
                     <?php echo $_item->getLabel() ?>
                     <?php if ($this->shouldDisplayProductCount()): ?>
