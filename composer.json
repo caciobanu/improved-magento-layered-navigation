@@ -1,7 +1,7 @@
 {
     "name": "caciobanu/improved-magento-layered-navigation",
     "type": "magento-module",
-    "license": "OSL-3.0",
+    "license": "MIT",
     "description": "Improved Magento layered navigation extension",
     "suggest": {
         "magento-hackathon/magento-composer-installer": "*"
