@@ -62,12 +62,16 @@ var CatalinSeoHandler = {
                     $('ajax-errors').show();
                 }
                 $('loading').hide();
-            }
+            },
+            onComplete: CatalinSeoHandler.sendUpdateEvent
         });
 
         if (event) {
             event.preventDefault();
         }
+    },
+    sendUpdateEvent: function() {
+        $j(document).trigger('catalin:updatePage');
     },
     prepareAjaxUrl: function (url) {
         // In EE, the FPC caches response headers by request path, without query arguments.
