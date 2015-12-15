@@ -141,6 +141,7 @@
                 <price_slider>1</price_slider>
                 <multiple_choice_filters>1</multiple_choice_filters>
                 <routing_suffix>filter</routing_suffix>
+                <loading_icon>loading</loading_icon>
                 <nofollow>0</nofollow>
             </catalog>
         </catalin_seo>

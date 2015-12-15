@@ -83,6 +83,19 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     }
 
     /**
+     * Get the ID of the loading icon that will pop up while loading
+     *
+     * @return string
+     */
+    public function getLoadingIconId()
+    {
+        if (!$this->isEnabled()) {
+            return false;
+        }
+        return Mage::getStoreConfig('catalin_seo/catalog/loading_icon');
+    }
+
+    /**
      * Getter for layered navigation params
      * If $params are provided then it overrides the ones from registry
      *
