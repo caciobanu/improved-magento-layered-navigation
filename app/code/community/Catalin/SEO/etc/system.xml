@@ -86,6 +86,19 @@
                                 <enabled>1</enabled>
                             </depends>
                         </routing_suffix>
+                        <loading_icon translate="label">
+                            <label>Loading Icon or Modal ID</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Enter an html ID that will show as the loading icon or modal.</comment>
+                            <backend_model>catalin_seo/system_config_backend_seo_catalog</backend_model>
+                            <sort_order>8</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </loading_icon>
                         <nofollow translate="label">
                             <label>Enable Nofollow on Layered Navigation Links</label>
                             <frontend_type>select</frontend_type>

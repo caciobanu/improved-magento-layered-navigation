@@ -33,7 +33,7 @@ var CatalinSeoHandler = {
 
         fullUrl = self.prepareAjaxUrl(url);
 
-        $('loading').show();
+        CatalinSeoHandler.loadingIcon.show();
         $('ajax-errors').hide();
 
         self.pushState(null, url, false);
@@ -61,7 +61,7 @@ var CatalinSeoHandler = {
                 } else {
                     $('ajax-errors').show();
                 }
-                $('loading').hide();
+                CatalinSeoHandler.loadingIcon.hide();
             }
         });
 

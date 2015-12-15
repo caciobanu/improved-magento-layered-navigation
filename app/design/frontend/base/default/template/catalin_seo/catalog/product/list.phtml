@@ -173,8 +173,9 @@ foreach($_afterChildren as $_afterChildName):
     //<![CDATA[
     <?php if ($this->helper('catalin_seo')->isAjaxEnabled()): ?>
     CatalinSeoHandler.isAjaxEnabled = true;
-    CatalinSeoHandler.urlSuffix = <?php echo json_encode(Mage::helper('catalin_seo')->appendSuffix('', Mage::getStoreConfig('catalog/seo/category_url_suffix'))); ?>;
-    CatalinSeoHandler.routingSuffix = <?php echo json_encode(Mage::helper('catalin_seo')->getRoutingSuffix()) ?>;
+    CatalinSeoHandler.urlSuffix = <?php echo json_encode($this->helper('catalin_seo')->appendSuffix('', Mage::getStoreConfig('catalog/seo/category_url_suffix'))); ?>;
+    CatalinSeoHandler.routingSuffix = <?php echo json_encode($this->helper('catalin_seo')->getRoutingSuffix()) ?>;
+    CatalinSeoHandler.loadingIcon = $j('#<?php echo $this->helper('catalin_seo')->getLoadingIconId() ?>');
     <?php endif; ?>
     CatalinSeoHandler.bindListeners();
     //]]>
