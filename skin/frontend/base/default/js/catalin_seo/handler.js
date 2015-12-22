@@ -66,12 +66,16 @@ var CatalinSeoHandler = {
                     $('ajax-errors').show();
                 }
                 $('loading').hide();
-            }
+            },
+            onComplete: CatalinSeoHandler.sendUpdateEvent
         });
 
         if (event) {
             event.preventDefault();
         }
+    },
+    sendUpdateEvent: function() {
+        $j(document).trigger('catalin:updatePage');
     },
     pushState: function (data, link, replace) {
         var History = window.History;
