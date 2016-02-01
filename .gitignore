@@ -30,7 +30,6 @@
 /app/etc/modules/Mage_*
 /app/etc/modules/Phoenix_*
 
-/app/locale/
 /app/Mage.php
 
 /app/code/core/

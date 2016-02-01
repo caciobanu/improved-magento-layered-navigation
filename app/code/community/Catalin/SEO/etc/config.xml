@@ -109,6 +109,15 @@
         </index>
     </global>
     <frontend>
+        <translate>
+            <modules>
+                <catalin_seo>
+                    <files>
+                        <default>Catalin_SEO.csv</default>
+                    </files>
+                </catalin_seo>
+            </modules>
+        </translate>
         <routers>
             <catalog>
                 <args>
@@ -142,6 +151,7 @@
                 <multiple_choice_filters>1</multiple_choice_filters>
                 <routing_suffix>filter</routing_suffix>
                 <nofollow>0</nofollow>
+                <show_more_link>0</show_more_link>
             </catalog>
         </catalin_seo>
     </default>
