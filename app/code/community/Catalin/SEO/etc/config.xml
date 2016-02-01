@@ -109,6 +109,15 @@
         </index>
     </global>
     <frontend>
+        <translate>
+            <modules>
+                <catalin_seo>
+                    <files>
+                        <default>Catalin_SEO.csv</default>
+                    </files>
+                </catalin_seo>
+            </modules>
+        </translate>
         <routers>
             <catalog>
                 <args>
