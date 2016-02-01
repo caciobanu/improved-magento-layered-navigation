@@ -24,6 +24,6 @@ $_showMore = Mage::helper('catalin_seo')->getShowMore();
         </li>
     <?php endforeach ?>
     <?php if($_showMore && count($this->getItems()) > $_showMore): ?>
-        <li><a href="#" class="show_more_filters" data-text-more="<?php echo Mage::helper('catalin_seo')->__('Show More'); ?>" data-text-less="<?php echo Mage::helper('catalin_seo')->__('Show Less'); ?>"><?php echo Mage::helper('catalin_seo')->__('Show More'); ?></a></li>
+        <li><a href="javascript:void()" class="show_more_filters" data-text-more="<?php echo Mage::helper('catalin_seo')->__('Show More'); ?>" data-text-less="<?php echo Mage::helper('catalin_seo')->__('Show Less'); ?>"><?php echo Mage::helper('catalin_seo')->__('Show More'); ?></a></li>
     <?php endif; ?>
 </ol>
