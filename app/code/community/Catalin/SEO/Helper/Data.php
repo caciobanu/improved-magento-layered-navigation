@@ -141,9 +141,17 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         $url = Mage::getUrl('*/*/*', $params);
         $urlPath = '';
 
+        if(isset($filters['cat']) && Mage::getStoreConfigFlag('catalin_seo/catalog/category_links')) {
+            $urlParts = explode('/', $url);
+            $url = implode('/', array_merge($urlParts, array($filters['cat'])));
+        }
+
         if (!$noFilters) {
             // Add filters
             $layerParams = $this->getCurrentLayerParams($filters);
+            if(isset($layerParams['cat']) && Mage::getStoreConfigFlag('catalin_seo/catalog/category_links')) {
+                unset($layerParams['cat']);
+            }
             foreach ($layerParams as $key => $value) {
                 // Encode and replace escaped delimiter with the delimiter itself
                 $value = str_replace(urlencode(self::MULTIPLE_FILTERS_DELIMITER), self::MULTIPLE_FILTERS_DELIMITER, urlencode($value));
