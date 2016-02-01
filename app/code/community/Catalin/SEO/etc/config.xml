@@ -142,7 +142,7 @@
                 <multiple_choice_filters>1</multiple_choice_filters>
                 <routing_suffix>filter</routing_suffix>
                 <nofollow>0</nofollow>
-		<category_links>0</category_links>
+                <show_more_link>0</show_more_link>
             </catalog>
         </catalin_seo>
     </default>
