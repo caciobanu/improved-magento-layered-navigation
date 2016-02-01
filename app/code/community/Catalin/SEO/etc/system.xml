@@ -104,6 +104,15 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </category_links>
+                        <show_more_link translate="label">
+                            <label>Use 'Show more' link</label>
+                            <comment>Show 'Show more' link when option has more than X items (use 0 for showing all)</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_more_link>
                     </fields>
                 </catalog>
             </groups>

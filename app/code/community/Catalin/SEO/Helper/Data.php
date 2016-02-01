@@ -519,4 +519,9 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         }
     }
 
+    public function getShowMore()
+    {
+        return Mage::getStoreConfig('catalin_seo/catalog/show_more_link');
+    }
+
 }

@@ -1,3 +1,14 @@
+document.observe("dom:loaded", function () {
+    $j('a.show_more_filters').on('click', function (e) {
+        $j(e.target).parent().parent().find('.filter_hide').toggle();
+        if($j(e.target).text() == $j(e.target).data('text-more')) {
+            $j(e.target).text($j(e.target).data('text-less'));
+        } else {
+            $j(e.target).text($j(e.target).data('text-more'));
+        }
+    });
+});
+
 var CatalinSeoHandler = {
     listenersBinded: false,
     isAjaxEnabled: false,
