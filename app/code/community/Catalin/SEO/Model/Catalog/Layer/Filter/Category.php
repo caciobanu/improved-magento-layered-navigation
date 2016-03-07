@@ -65,6 +65,8 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Category extends Mage_Catalog_Model
                     $urlKey = $category->getUrlKey();
                     if (empty($urlKey)) {
                         $urlKey = $category->getId();
+                    } else {
+                        $urlKey = $category->getId() . '-' . $urlKey;
                     }
 
                     $data[] = array(
@@ -98,10 +100,12 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Category extends Mage_Catalog_Model
             return $this;
         }
 
+        $parts = explode('-', $filter);
+
         // Load the category filter by url_key
         $this->_appliedCategory = Mage::getModel('catalog/category')
             ->setStoreId(Mage::app()->getStore()->getId())
-            ->loadByAttribute('url_key', $filter);
+            ->loadByAttribute('url_key', $parts[0]);
 
         // Extra check in case it is a category id and not url key
         if (!($this->_appliedCategory instanceof Mage_Catalog_Model_Category)) {
