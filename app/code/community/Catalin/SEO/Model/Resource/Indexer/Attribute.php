@@ -17,7 +17,14 @@
 class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Resource_Abstract
 {
 
+    /**
+     * @var array
+     */
     protected $storesIds;
+
+    /**
+     * @var Catalin_SEO_Helper_Data
+     */
     protected $helper;
 
     /**
@@ -49,54 +56,14 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
     public function reindexSeoUrlKeys($attributeId = null)
     {
         $attributes = $this->getAttributes($attributeId);
-        $stores = $this->getAllStoresIds();
 
-        $data = array();
         foreach ($attributes as $attribute) {
             if ($attribute->usesSource()) {
-                foreach ($stores as $storeId) {
-                    $result = $this->getInsertValues($attribute, $storeId);
-                    $data = array_merge($data, $result);
-                }
+                $this->reindexAttribute($attribute);
             }
         }
 
-        if (!empty($attributeId)) {
-            $this->saveData($data, array("`attribute_id` = ?" => $attributeId));
-        } else {
-            $this->saveData($data);
-        }
-
         return $this;
-    }
-
-    /**
-     * Save data into database
-     *
-     * @param array $data
-     * @param array $deleteWhere
-     * @throws Exception
-     */
-    protected function saveData(array $data, array $deleteWhere = array())
-    {
-        // Continue only if we have something to insert
-        if (empty($data)) {
-            return $this;
-        }
-
-        // Do it in one transaction
-        $this->beginTransaction();
-
-        try {
-            $writeAdapter = $this->_getWriteAdapter();
-            $writeAdapter->delete($this->getMainTable(), $deleteWhere);
-            $writeAdapter->insertMultiple($this->getMainTable(), $data);
-
-            $this->commit();
-        } catch (Exception $e) {
-            $this->rollBack();
-            throw $e;
-        }
     }
 
     /**
@@ -121,59 +88,107 @@ class Catalin_SEO_Model_Resource_Indexer_Attribute extends Mage_Index_Model_Reso
     }
 
     /**
-     * Retrieve data to be insterted after processing attribute
+     * Reindex attribute
      *
      * @param Mage_Catalog_Model_Resource_Eav_Attribute $attribute
-     * @param int $storeId
+     * @throws Exception
+     */
+    protected function reindexAttribute($attribute)
+    {
+        $this->beginTransaction();
+        try {
+            $writeAdapter = $this->_getWriteAdapter();
+
+            $writeAdapter->delete($this->getMainTable(), array("attribute_id = ?" => $attribute->getId()));
+            $writeAdapter->insertMultiple($this->getMainTable(), $this->getInsertValues($attribute));
+
+            $this->commit();
+        } catch (Exception $e) {
+            $this->rollBack();
+            throw $e;
+        }
+    }
+
+    /**
+     * Retrieve data to be inserted
+     *
+     * @param Mage_Catalog_Model_Resource_Eav_Attribute $attribute
      * @return array
      */
-    protected function getInsertValues($attribute, $storeId)
+    protected function getInsertValues($attribute)
     {
-        $options = array();
-
-        if ($attribute->getSourceModel()) {
-            $options = $attribute->getSource()->getAllOptions();
-        }
-        else {
-            $collection = Mage::getResourceModel('eav/entity_attribute_option_collection')
-                ->setStoreFilter($storeId)
-                ->setPositionOrder('asc')
-                ->setAttributeFilter($attribute->getId())
-                ->load();
-            $options = $collection->toOptionArray();
-        }
-
         $data = array();
-        foreach ($options as $option) {
-            // Generate url value
-            $urlValue = $this->getHelper()->transliterate($option['label']);
+        foreach ($this->getAllStoresIds() as $storeId) {
+            $attribute->setStoreId($storeId);
+            if ($attribute->getSourceModel()) {
+                $options = $attribute->getSource()->getAllOptions(false);
+            } else {
+                $collection = Mage::getResourceModel('eav/entity_attribute_option_collection')
+                    ->setStoreFilter($storeId)
+                    ->setPositionOrder('asc')
+                    ->setAttributeFilter($attribute->getId())
+                    ->load();
+                $options = $collection->toOptionArray();
+            }
 
-            // Check if this url key is taken and add -{count}
-            $count = 0;
-            $origUrlValue = $urlValue;
-            do {
-                $found = false;
-                foreach ($data as $line) {
-                    if ($line['url_value'] == $urlValue) {
+            foreach ($options as $option) {
+                // Generate url value
+                $urlValue = $this->getHelper()->transliterate($option['label']);
+                $urlKey = $this->getHelper()->transliterate($attribute->getStoreLabel($storeId));
+
+                // Check if this url value is taken and add -{count}
+                $countValue = 0;
+                $origUrlValue = $urlValue;
+                do {
+                    $found = false;
+                    foreach ($data as $line) {
+                        if ($line['store_id'] == $storeId && $line['url_value'] == $urlValue) {
+                            $urlValue = $origUrlValue . '-' . ++$countValue;
+                            $found = true;
+                        }
+                    }
+                } while ($found);
+
+                // Check if this url key is taken and add -{count}
+                $countKey = 0;
+                $origUrlKey = $urlKey;
+                do {
+                    $found = false;
+                    if ($this->urlKeyExists($attribute->getId(), $urlKey)) {
+                        $urlKey = $origUrlKey . '-' . ++$countKey;
                         $found = true;
                     }
-                }
-                if ($found) {
-                    $urlValue = $origUrlValue . '-' . ++$count;
-                }
-            } while ($found);
+                } while ($found);
 
-            $data[] = array(
-                'attribute_code' => $attribute->getAttributeCode(),
-                'attribute_id' => $attribute->getId(),
-                'store_id' => $storeId,
-                'option_id' => $option['value'],
-                'url_key' => $this->getHelper()->transliterate($attribute->getStoreLabel($storeId)),
-                'url_value' => $urlValue,
-            );
+                $data[] = array(
+                    'attribute_code' => $attribute->getAttributeCode(),
+                    'attribute_id' => $attribute->getId(),
+                    'store_id' => $storeId,
+                    'option_id' => $option['value'],
+                    'url_key' => $urlKey,
+                    'url_value' => $urlValue,
+                );
+            }
         }
 
         return $data;
+    }
+
+    /**
+     * @param int $attributeId
+     * @param string $urlKey
+     * @return bool
+     */
+    protected function urlKeyExists($attributeId, $urlKey)
+    {
+        $readAdapter = $this->_getReadAdapter();
+        $select = $readAdapter->select()
+            ->from($this->getMainTable(), array('attribute_id'))
+            ->where('attribute_id != ?', $attributeId)
+            ->where('url_key = ?', $urlKey)
+            ->limit(1);
+
+        return (bool) $readAdapter->fetchOne($select);
     }
 
     /**
