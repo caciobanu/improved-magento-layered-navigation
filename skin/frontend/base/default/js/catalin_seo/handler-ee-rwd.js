@@ -43,7 +43,7 @@ var CatalinSeoHandler = {
             onSuccess: function (transport) {
                 if (transport.responseJSON) {
                     $('catalog-listing').update(transport.responseJSON.listing);
-                    $$('.block-layered-nav')[0].update(transport.responseJSON.layer);
+                    $$('.block-layered-nav')[0].replace(transport.responseJSON.layer);
                     self.pushState({
                         listing: transport.responseJSON.listing,
                         layer: transport.responseJSON.layer
@@ -184,7 +184,7 @@ var CatalinSeoHandler = {
 
                 self.pushState({
                     listing: $('catalog-listing').innerHTML,
-                    layer: $$('.block-layered-nav')[0].innerHTML
+                    layer: $$('.block-layered-nav')[0].outerHTML
                 }, document.location.href, true);
 
                 // Bind to StateChange Event
@@ -192,7 +192,7 @@ var CatalinSeoHandler = {
                     if (event.type == 'popstate') {
                         var State = History.getState();
                         $('catalog-listing').update(State.data.listing);
-                        $$('.block-layered-nav')[0].update(State.data.layer);
+                        $$('.block-layered-nav')[0].replace(State.data.layer);
                         self.ajaxListener();
                         self.toggleContent();
                         self.alignProductGridActions();
