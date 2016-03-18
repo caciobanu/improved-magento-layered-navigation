@@ -11,7 +11,7 @@
  * https://opensource.org/licenses/MIT
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2015 Catalin Ciobanu
+ * @copyright   Copyright (c) 2016 Catalin Ciobanu
  * @license     https://opensource.org/licenses/MIT  MIT License (MIT)
  */
 class Catalin_SEO_Model_CatalogSearch_Layer_Filter_Attribute extends Catalin_SEO_Model_Catalog_Layer_Filter_Attribute
