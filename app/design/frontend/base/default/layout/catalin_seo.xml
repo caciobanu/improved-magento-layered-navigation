@@ -14,6 +14,8 @@
                 <type>skin_js</type>
                 <name helper="catalin_seo/getSkinJsUrl"/>
             </action>
+	    <block type="page/html_pager" name="rel_next_prev_canonical" template="catalin_seo/catalog/rel_next_prev_canonical.phtml"/>
+	    
         </reference>
         <reference name="product_list_toolbar">
             <block type="catalin_seo/catalog_product_list_pager" name="product_list_toolbar_pager"/>
