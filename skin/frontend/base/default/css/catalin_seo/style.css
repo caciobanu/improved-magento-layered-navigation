@@ -19,3 +19,13 @@ div.price-slider .price-slider-to {
     cursor: w-resize;
     margin-top: -17px;
 }
+
+.layer-check {
+    display:inline-block;
+    width:16px;
+    height:14px;
+    background: url("../../images/catalin_seo/check_layered_nav.png") top left no-repeat;
+}
+.layer-check.checked {
+    background: url("../../images/catalin_seo/check_layered_nav.png") bottom left no-repeat;
+}
