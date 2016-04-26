@@ -27,7 +27,7 @@ var CatalinSeoHandler = {
             url = el;
         } else if (el.tagName.toLowerCase() === 'a') {
             url = $(el).readAttribute('href');
-        } else if (el.tagName.toLowerCase() === 'select') {
+        } else if (el.tagName.toLowerCase() === 'select' || el.tagName.toLowerCase() === 'input') {
             url = $(el).getValue();
         }
 
@@ -133,14 +133,16 @@ var CatalinSeoHandler = {
             $$('div.sorter a'),
             $$('div.pager select'),
             $$('div.sorter select'),
-            $$('div.block-layered-nav a')
+            $$('div.block-layered-nav a'),
+            $$('div.block-layered-nav input[type="checkbox"]')
         );
         els.each(function (el) {
-            if (el.tagName.toLowerCase() === 'a') {
+            var tagName = el.tagName.toLowerCase();
+            if (tagName === 'a') {
                 $(el).observe('click', function (event) {
                     self.handleEvent(this, event);
                 });
-            } else if (el.tagName.toLowerCase() === 'select') {
+            } else if (tagName === 'select' || tagName === 'input') {
                 $(el).setAttribute('onchange', '');
                 $(el).observe('change', function (event) {
                     self.handleEvent(this, event);
