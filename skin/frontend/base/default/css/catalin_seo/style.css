@@ -19,3 +19,19 @@ div.price-slider .price-slider-to {
     cursor: w-resize;
     margin-top: -17px;
 }
+
+.block-layered-nav dl dd ol > li > div {
+    padding: 5px 15px;
+    color: #3399cc;
+}
+
+.block-layered-nav dl dd ol > li > div > label {
+    font-weight: normal;
+    font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.block-layered-nav dl dd ol > li > div > label:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
