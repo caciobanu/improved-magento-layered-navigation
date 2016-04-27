@@ -20,18 +20,18 @@ div.price-slider .price-slider-to {
     margin-top: -17px;
 }
 
-.block-layered-nav dl dd ol > li > div {
+.block-layered-nav .layered-nav-filter {
     padding: 5px 15px;
     color: #3399cc;
 }
 
-.block-layered-nav dl dd ol > li > div > label {
+.block-layered-nav .layered-nav-filter .layered-nav-filter-label {
     font-weight: normal;
     font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
     font-size: 14px;
 }
 
-.block-layered-nav dl dd ol > li > div > label:hover {
+.block-layered-nav .layered-nav-filter .layered-nav-filter-label:hover {
     text-decoration: underline;
     cursor: pointer;
 }
