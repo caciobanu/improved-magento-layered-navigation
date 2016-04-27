@@ -6,12 +6,12 @@ $_nofollow = Mage::helper('catalin_seo')->getNofollow();
         <li>
             <?php if ($_item->getCount() > 0): ?>
                 <?php $id = $_item->getFilter()->getRequestVar() . '-' . $_item->getValue(); ?>
-                <div class="control" href="<?php echo ($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl() ?>" <?php echo $_nofollow; ?> >
+                <div class="layered-nav-filter" href="<?php echo ($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl() ?>" <?php echo $_nofollow; ?> >
                     <input type="checkbox"<?php if ($_item->isSelected()): ?> checked="checked" <?php endif; ?>
                            value="<?php echo ($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl() ?>"
                            id="<?php echo $id; ?>" />
 
-                    <label for="<?php echo $id; ?>">
+                    <label for="<?php echo $id; ?>" class="layered-nav-filter-label">
                         <?php echo $_item->getLabel() ?>
                         <?php if ($this->shouldDisplayProductCount()): ?>
                             <span class="count">(<?php echo $_item->getCount() ?>)</span>
