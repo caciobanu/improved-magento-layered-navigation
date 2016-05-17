@@ -14,7 +14,7 @@
  * @copyright   Copyright (c) 2016 Catalin Ciobanu
  * @license     https://opensource.org/licenses/MIT  MIT License (MIT)
  */
-class Catalin_SEO_Model_Enterprise_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Model_Catalog_Layer_Filter_Attribute
+class Catalin_SEO_Model_Enterprise_Catalog_Layer_Filter_Attribute extends Enterprise_Search_Model_Catalog_Layer_Filter_Attribute
 {
 
     protected $_values = array();
