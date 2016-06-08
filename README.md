@@ -51,6 +51,8 @@ And then whitelist the filters you'd like to show;
 </catalin_show_filters>
 ```
 
+If you are migrating from Manadev to this extension, you'll be pleased to know this is backwards compatible with the setData calls Manadev is using to achieve this.
+
 Install via Modman
 ----------------
 
