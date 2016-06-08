@@ -11,7 +11,7 @@
  * https://opensource.org/licenses/MIT
  *
  * @package     Catalin_Seo
- * @copyright   Copyright (c) 2015 Catalin Ciobanu
+ * @copyright   Copyright (c) 2016 Catalin Ciobanu
  * @license     https://opensource.org/licenses/MIT  MIT License (MIT)
  */
 class Catalin_SEO_Block_Catalog_Product_List_Pager extends Mage_Page_Block_Html_Pager
