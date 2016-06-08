@@ -39,15 +39,18 @@ class Catalin_SEO_Block_Catalog_Layer_View extends Mage_Catalog_Block_Layer_View
         }
 
         /* Backwards compatibility with Manadev */
-        foreach($this->getLayout()->getXpath('reference[@name="mana.catalog.leftnav"]') as $node) {
-            $instruction = (string)$node->action->instruction;
-            $action = substr($instruction, 0, 4);
-            $attributeCode = substr($instruction, 5);
+        $manadevInstructions = $this->getLayout()->getXpath('reference[@name="mana.catalog.leftnav"]');
+        if(is_array($manadevInstructions) && count($manadevInstructions)) {
+            foreach ($manadevInstructions as $node) {
+                $instruction = (string)$node->action->instruction;
+                $action = substr($instruction, 0, 4);
+                $attributeCode = substr($instruction, 5);
 
-            if($action == 'hide') {
-                $this->_hideAttributes[] = $attributeCode;
-            } elseif($action == 'show') {
-                $this->_showAttributes[] = $attributeCode;
+                if ($action == 'hide') {
+                    $this->_hideAttributes[] = $attributeCode;
+                } elseif ($action == 'show') {
+                    $this->_showAttributes[] = $attributeCode;
+                }
             }
         }
 
