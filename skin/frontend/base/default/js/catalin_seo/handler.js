@@ -142,6 +142,15 @@ var CatalinSeoHandler = {
         document.observe("dom:loaded", function () {
             self.ajaxListener();
 
+            $j('a.show_more_filters').on('click', function (e) {
+                $j(e.target).parent().parent().find('.filter_hide').toggle();
+                if($j(e.target).text() == $j(e.target).data('text-more')) {
+                    $j(e.target).text($j(e.target).data('text-less'));
+                } else {
+                    $j(e.target).text($j(e.target).data('text-more'));
+                }
+            });
+
             (function (History) {
                 if (!History.enabled) {
                     return false;
