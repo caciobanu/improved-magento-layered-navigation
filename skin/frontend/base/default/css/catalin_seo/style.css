@@ -35,3 +35,11 @@ div.price-slider .price-slider-to {
     text-decoration: underline;
     cursor: pointer;
 }
+
+li.filter_hide { 
+    display:none; 
+}
+
+a.show_more_filters { 
+    float:right; 
+}
