@@ -18,6 +18,41 @@ Features
 
 All the above features can be enabled/disabled from backend: "System -> Configuration -> Catalin SEO -> Catalog Layered Navigation"
 
+Whitelisting/blacklisting filters
+----------------
+
+You have the option to blacklist & whitelist (hide & show) filters on certain categories. For this, use the Custom Design > Custom Layout Update section in the backend when editing the category.
+
+To hide filters:
+
+```xml
+<catalin_hide_filters>
+    <attribute_code_here />
+    <another_attribute_code_here />
+    <etcetera />
+</catalin_hide_filters>
+```
+
+You can also whitelist filters. To do this, you first need to hide all of them;
+
+```xml
+<catalin_hide_filters>
+    <all_filters />
+</catalin_hide_filters>
+```
+
+And then whitelist the filters you'd like to show;
+
+```xml
+<catalin_show_filters>
+    <attribute_code_here />
+    <another_attribute_code_here />
+    <etcetera />
+</catalin_show_filters>
+```
+
+If you are migrating from Manadev to this extension, you'll be pleased to know this is backwards compatible with the setData calls Manadev is using to achieve this.
+
 Install via Modman
 ----------------
 
