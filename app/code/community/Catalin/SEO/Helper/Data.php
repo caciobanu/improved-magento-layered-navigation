@@ -524,4 +524,16 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         return Mage::getStoreConfig('catalin_seo/catalog/show_more_link');
     }
 
+    public function getSearchFilter()
+    {
+        $searchFilter = Mage::getStoreConfig('catalin_seo/catalog/search_filter');
+        if($searchFilter && $this->getShowMore()) {
+            return true;
+        } elseif($searchFilter && !$this->getShowMore()) {
+            return null;
+        } else {
+            return false;
+        }
+    }
+
 }
