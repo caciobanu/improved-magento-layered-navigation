@@ -38,6 +38,8 @@ var CatalinSeoHandler = {
 
         self.pushState(null, url, false);
 
+        self.showMoreListener();
+
         new Ajax.Request(fullUrl, {
             method: 'get',
             onSuccess: function (transport) {
@@ -208,6 +210,8 @@ var CatalinSeoHandler = {
                     }
                 });
             })(window.History);
+
+            self.showMoreListener();
         });
     },
     toggleContent: function() {
@@ -375,6 +379,16 @@ var CatalinSeoHandler = {
             },
             unmatch: function () {
                 this.toggleElements.toggleSingle({destruct: true});
+            }
+        });
+    },
+    showMoreListener: function() {
+        $j('a.show_more_filters').on('click', function (e) {
+            $j(e.target).parent().parent().find('.filter_hide').toggle();
+            if($j(e.target).text() == $j(e.target).data('text-more')) {
+                $j(e.target).text($j(e.target).data('text-less'));
+            } else {
+                $j(e.target).text($j(e.target).data('text-more'));
             }
         });
     }

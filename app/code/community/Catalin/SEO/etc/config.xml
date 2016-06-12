@@ -152,6 +152,7 @@
                 <routing_suffix>filter</routing_suffix>
                 <nofollow>0</nofollow>
                 <show_more_link>0</show_more_link>
+                <category_links>0</category_links>
             </catalog>
         </catalin_seo>
     </default>
