@@ -40,6 +40,8 @@ var CatalinSeoHandler = {
 
         self.showMoreListener();
 
+        self.searchBoxListener();
+
         new Ajax.Request(fullUrl, {
             method: 'get',
             onSuccess: function (transport) {
@@ -212,6 +214,8 @@ var CatalinSeoHandler = {
             })(window.History);
 
             self.showMoreListener();
+
+            self.searchBoxListener();
         });
     },
     toggleContent: function() {
