@@ -35,3 +35,25 @@ div.price-slider .price-slider-to {
     text-decoration: underline;
     cursor: pointer;
 }
+
+li.filter_hide { 
+    display:none; 
+}
+
+a.show_more_filters { 
+    float:right; 
+}
+
+.sidebar .block-layered-nav .attribute_value_search_box {
+     margin-bottom:17px;
+     display:none;
+ }
+
+.sidebar .block-layered-nav .attribute_value_search_box.enabled {
+     display:block;
+ }
+
+.sidebar .block-layered-nav .attribute_value_search_box input {
+     width:90%;
+     padding:3px;
+}

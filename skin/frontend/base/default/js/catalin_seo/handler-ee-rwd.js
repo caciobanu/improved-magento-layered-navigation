@@ -38,6 +38,10 @@ var CatalinSeoHandler = {
 
         self.pushState(null, url, false);
 
+        self.showMoreListener();
+
+        self.searchBoxListener();
+
         new Ajax.Request(fullUrl, {
             method: 'get',
             onSuccess: function (transport) {
@@ -208,6 +212,10 @@ var CatalinSeoHandler = {
                     }
                 });
             })(window.History);
+
+            self.showMoreListener();
+
+            self.searchBoxListener();
         });
     },
     toggleContent: function() {
@@ -375,6 +383,36 @@ var CatalinSeoHandler = {
             },
             unmatch: function () {
                 this.toggleElements.toggleSingle({destruct: true});
+            }
+        });
+    },
+    showMoreListener: function() {
+        $j('a.show_more_filters').on('click', function (e) {
+            $j(e.target).parent().parent().find('.filter_hide').toggle();
+            $j(e.target).parent().parent().parent().prev('.attribute_value_search_box').toggle().find('input').focus();
+            if($j(e.target).text() == $j(e.target).data('text-more')) {
+                $j(e.target).text($j(e.target).data('text-less'));
+            } else {
+                $j(e.target).text($j(e.target).data('text-more'));
+            }
+        });
+    },
+    searchBoxListener: function() {
+        /* Make CSS contains psuedo selector case insensitive */
+        $j.expr[":"].contains = $j.expr.createPseudo(function(arg) {
+            return function( elem ) {
+                return $j(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+            };
+        });
+
+        $j('.attribute_value_search_box input').on('keyup', function (e) {
+            if($j(e.target).val()) {
+                $j(e.target).parent().next('dd').find('li').hide();
+                $j(e.target).parent().next('dd').find('li:contains("' + $j(e.target).val() + '")').each(function (i, li) {
+                    $j(li).show();
+                });
+            } else {
+                $j(e.target).parent().next('dd').find('li').show();
             }
         });
     }

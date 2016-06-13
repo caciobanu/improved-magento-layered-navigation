@@ -1,4 +1,5 @@
 <?php if ($this->canShowBlock()): ?>
+    <?php $_searchFilter = Mage::helper('catalin_seo')->getSearchFilter(); ?>
     <?php if (!$this->getRequest()->isAjax()): ?>
     <div id="layered-navigation">
     <?php endif; ?>
@@ -18,6 +19,9 @@
                     <?php foreach ($_filters as $_filter): ?>
                         <?php if($_filter->getItemsCount()): ?>
                             <dt><?php echo $this->__($_filter->getName()) ?></dt>
+                            <?php if($_searchFilter !== false): ?>
+                            <dt class="attribute_value_search_box<?php if($_searchFilter !== true): ?> enabled<?php endif; ?>"><input type="text" placeholder="<?php echo $this->__('Search for option'); ?>" /></dt>
+                            <?php endif;?>
                             <dd><?php echo $_filter->getHtml() ?></dd>
                         <?php endif; ?>
                     <?php endforeach; ?>
