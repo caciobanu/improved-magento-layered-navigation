@@ -53,6 +53,24 @@ And then whitelist the filters you'd like to show;
 
 If you are migrating from Manadev to this extension, you'll be pleased to know this is backwards compatible with the setData calls Manadev is using to achieve this.
 
+You can also define this through your local.xml by using the `CATEGORY_<category_id>` directive;
+
+```xml
+<catalog_category_layered>
+    <CATEGORY_42>
+        <catalin_hide_filters>
+            <attribute_code_here />
+            <another_attribute_code_here />
+            <etcetera />
+        </catalin_hide_filters>
+    </CATEGORY_42>
+    <!-- Quick way to duplicate settings to other categories -->
+    <CATEGORY_43>
+        <update handle="CATEGORY_42" />
+    </CATEGORY_43>
+</catalog_category_layered>
+```
+
 Install via Modman
 ----------------
 
