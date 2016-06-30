@@ -178,7 +178,8 @@ var CatalinSeoHandler = {
             self.ajaxListener();
 
             (function (History) {
-                if (!History.enabled) {
+                // Skip empty categories.
+                if (!History.enabled || !$('catalog-listing')) {
                     return false;
                 }
 
