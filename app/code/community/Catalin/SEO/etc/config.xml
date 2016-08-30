@@ -57,6 +57,7 @@
                     <layer_state>Catalin_SEO_Block_Catalog_Layer_State</layer_state>
                     <product_list_toolbar>Catalin_SEO_Block_Catalog_Product_List_Toolbar</product_list_toolbar>
                     <layer_filter_attribute>Catalin_SEO_Block_Catalog_Layer_Filter_Attribute</layer_filter_attribute>
+                    <layer_filter_category>Catalin_SEO_Block_Catalog_Layer_Filter_Category</layer_filter_category>
                     <layer_filter_price>Catalin_SEO_Block_Catalog_Layer_Filter_Price</layer_filter_price>
                 </rewrite>
             </catalog>

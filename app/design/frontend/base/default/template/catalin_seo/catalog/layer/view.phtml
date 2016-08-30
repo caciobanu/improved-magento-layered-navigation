@@ -10,7 +10,7 @@
         <div class="block-content toggle-content">
             <?php echo $this->getStateHtml() ?>
             <?php if ($this->getLayer()->getState()->getFilters()): ?>
-                <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions"><a href="<?php echo $this->urlEscape($this->getClearUrl()) ?>"><?php echo $this->__('Clear All') ?></a></div>
             <?php endif; ?>
             <?php if($this->canShowOptions()): ?>
                 <p class="block-subtitle block-subtitle--filter"><?php echo $this->__('Filter') ?></p>

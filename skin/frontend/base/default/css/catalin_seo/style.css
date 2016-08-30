@@ -40,12 +40,15 @@ li.filter_hide {
     display:none; 
 }
 
-a.show_more_filters { 
-    float:right; 
+div.show_more_filters {
+    text-align: right;
+}
+
+div.show_more_filters a {
+    cursor: pointer;
 }
 
 .sidebar .block-layered-nav .attribute_value_search_box {
-     margin-bottom:17px;
      display:none;
  }
 
