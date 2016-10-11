@@ -73,6 +73,19 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     }
 
     /**
+     * Check if category links are enabled instead of the filter
+     *
+     * @return boolean
+     */
+    public function isCategoryLinksEnabled()
+    {
+        if (!$this->isEnabled()) {
+            return false;
+        }
+        return Mage::getStoreConfigFlag('catalin_seo/catalog/category_links');
+    }
+
+    /**
      * Retrieve routing suffix
      *
      * @return string
@@ -134,22 +147,20 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         $params = array(
             '_current' => true,
             '_use_rewrite' => true,
-            '_query' => $query,
-            '_escape' => true,
+            '_query' => $query
         );
 
         $url = Mage::getUrl('*/*/*', $params);
         $urlPath = '';
 
-        if(isset($filters['cat']) && Mage::getStoreConfigFlag('catalin_seo/catalog/category_links')) {
-            $urlParts = explode('/', $url);
-            $url = implode('/', array_merge($urlParts, array($filters['cat'])));
+        if (isset($filters['cat']) && $this->isCategoryLinksEnabled()) {
+            $url = $filters['cat'];
         }
 
         if (!$noFilters) {
             // Add filters
             $layerParams = $this->getCurrentLayerParams($filters);
-            if(isset($layerParams['cat']) && Mage::getStoreConfigFlag('catalin_seo/catalog/category_links')) {
+            if (isset($layerParams['cat']) && $this->isCategoryLinksEnabled()) {
                 unset($layerParams['cat']);
             }
             foreach ($layerParams as $key => $value) {

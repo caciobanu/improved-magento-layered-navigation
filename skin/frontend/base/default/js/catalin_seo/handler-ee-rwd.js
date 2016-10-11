@@ -31,6 +31,11 @@ var CatalinSeoHandler = {
             url = $(el).getValue();
         }
 
+        if ($j(el).hasClass('no-ajax')) {
+            window.location.href = url;
+            return;
+        }
+
         fullUrl = self.prepareAjaxUrl(url);
 
         $('loading').show();
@@ -388,9 +393,9 @@ var CatalinSeoHandler = {
         });
     },
     showMoreListener: function() {
-        $j('a.show_more_filters').on('click', function (e) {
-            $j(e.target).parent().parent().find('.filter_hide').toggle();
-            $j(e.target).parent().parent().parent().prev('.attribute_value_search_box').toggle().find('input').focus();
+        $j('div.show_more_filters').on('click', function (e) {
+            $j(e.target).parent().parent().parent().find('.filter_hide').toggle();
+            $j(e.target).parent().parent().parent().parent().prev('.attribute_value_search_box').toggle().find('input').focus();
             if($j(e.target).text() == $j(e.target).data('text-more')) {
                 $j(e.target).text($j(e.target).data('text-less'));
             } else {

@@ -1,5 +1,4 @@
 <?php
-$_nofollow = Mage::helper('catalin_seo')->getNofollow();
 $_showMore = Mage::helper('catalin_seo')->getShowMore();
 ?>
 <ol>
@@ -7,9 +6,9 @@ $_showMore = Mage::helper('catalin_seo')->getShowMore();
         <li<?php if($_showMore && $_key >= $_showMore): ?> class="filter_hide"<?php endif; ?>>
             <?php if ($_item->getCount() > 0): ?>
                 <?php $id = $_item->getFilter()->getRequestVar() . '-' . $_item->getValue(); ?>
-                <div class="layered-nav-filter" href="<?php echo ($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl() ?>" >
+                <div class="layered-nav-filter">
                     <input type="checkbox"<?php if ($_item->isSelected()): ?> checked="checked" <?php endif; ?>
-                           value="<?php echo ($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl() ?>"
+                           value="<?php echo $this->urlEscape(($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl()) ?>"
                            id="<?php echo $id; ?>" />
 
                     <label for="<?php echo $id; ?>" class="layered-nav-filter-label">
@@ -30,6 +29,10 @@ $_showMore = Mage::helper('catalin_seo')->getShowMore();
         </li>
     <?php endforeach ?>
     <?php if($_showMore && count($this->getItems()) > $_showMore): ?>
-        <li><a href="javascript:void(0)" class="show_more_filters" data-text-more="<?php echo Mage::helper('catalin_seo')->__('Show More'); ?>" data-text-less="<?php echo Mage::helper('catalin_seo')->__('Show Less'); ?>"><?php echo Mage::helper('catalin_seo')->__('Show More'); ?></a></li>
+        <li>
+            <div class="show_more_filters">
+                <a data-text-more="<?php echo Mage::helper('catalin_seo')->__('Show More'); ?>" data-text-less="<?php echo Mage::helper('catalin_seo')->__('Show Less'); ?>"><?php echo Mage::helper('catalin_seo')->__('Show More'); ?></a>
+            </div>
+        </li>
     <?php endif; ?>
 </ol>

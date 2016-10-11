@@ -46,6 +46,10 @@
 /app/design/frontend/base/default/layout/*
 !/app/design/frontend/base/default/layout/catalin_seo.xml
 
+/app/locale/en_US/*
+!/app/locale/en_US/Catalin_SEO.csv
+!/app/locale/nl_NL/Catalin_SEO.csv
+
 /skin/adminhtml
 /skin/install
 /skin/frontend/rwd/
