@@ -1,4 +1,5 @@
 <?php if ($this->canShowBlock()): ?>
+    <?php $_searchFilter = Mage::helper('catalin_seo')->getSearchFilter(); ?>
     <?php if (!$this->getRequest()->isAjax()): ?>
     <div id="layered-navigation">
     <?php endif; ?>
@@ -9,7 +10,7 @@
         <div class="block-content toggle-content">
             <?php echo $this->getStateHtml() ?>
             <?php if ($this->getLayer()->getState()->getFilters()): ?>
-                <div class="actions"><a href="<?php echo $this->getClearUrl() ?>"><?php echo $this->__('Clear All') ?></a></div>
+                <div class="actions"><a href="<?php echo $this->urlEscape($this->getClearUrl()) ?>"><?php echo $this->__('Clear All') ?></a></div>
             <?php endif; ?>
             <?php if($this->canShowOptions()): ?>
                 <p class="block-subtitle block-subtitle--filter"><?php echo $this->__('Filter') ?></p>
@@ -18,6 +19,9 @@
                     <?php foreach ($_filters as $_filter): ?>
                         <?php if($_filter->getItemsCount()): ?>
                             <dt><?php echo $this->__($_filter->getName()) ?></dt>
+                            <?php if($_searchFilter !== false): ?>
+                            <dt class="attribute_value_search_box<?php if($_searchFilter !== true): ?> enabled<?php endif; ?>"><input type="text" placeholder="<?php echo $this->__('Search for option'); ?>" /></dt>
+                            <?php endif;?>
                             <dd><?php echo $_filter->getHtml() ?></dd>
                         <?php endif; ?>
                     <?php endforeach; ?>

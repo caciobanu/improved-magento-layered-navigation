@@ -19,3 +19,44 @@ div.price-slider .price-slider-to {
     cursor: w-resize;
     margin-top: -17px;
 }
+
+.block-layered-nav .layered-nav-filter {
+    padding: 5px 15px;
+    color: #3399cc;
+}
+
+.block-layered-nav .layered-nav-filter .layered-nav-filter-label {
+    font-weight: normal;
+    font-family: "Helvetica Neue", Verdana, Arial, sans-serif;
+    font-size: 14px;
+}
+
+.block-layered-nav .layered-nav-filter .layered-nav-filter-label:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+li.filter_hide { 
+    display:none; 
+}
+
+div.show_more_filters {
+    text-align: right;
+}
+
+div.show_more_filters a {
+    cursor: pointer;
+}
+
+.sidebar .block-layered-nav .attribute_value_search_box {
+     display:none;
+ }
+
+.sidebar .block-layered-nav .attribute_value_search_box.enabled {
+     display:block;
+ }
+
+.sidebar .block-layered-nav .attribute_value_search_box input {
+     width:90%;
+     padding:3px;
+}

@@ -1,17 +1,23 @@
 <?php
-$_nofollow = Mage::helper('catalin_seo')->getNofollow();
+$_showMore = Mage::helper('catalin_seo')->getShowMore();
 ?>
 <ol>
-    <?php foreach ($this->getItems() as $_item): ?>
-        <li>
+    <?php foreach ($this->getItems() as $_key=>$_item): ?>
+        <li<?php if($_showMore && $_key >= $_showMore): ?> class="filter_hide"<?php endif; ?>>
             <?php if ($_item->getCount() > 0): ?>
-                <a href="<?php echo ($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl() ?>" <?php echo $_nofollow; ?> >
-                    <input type="checkbox"<?php if ($_item->isSelected()): ?> checked="checked" <?php endif; ?>/>
-                    <?php echo $_item->getLabel() ?>
-                    <?php if ($this->shouldDisplayProductCount()): ?>
-                        <span class="count">(<?php echo $_item->getCount() ?>)</span>
-                    <?php endif; ?>
-                </a>
+                <?php $id = $_item->getFilter()->getRequestVar() . '-' . $_item->getValue(); ?>
+                <div class="layered-nav-filter">
+                    <input type="checkbox"<?php if ($_item->isSelected()): ?> checked="checked" <?php endif; ?>
+                           value="<?php echo $this->urlEscape(($_item->isSelected()) ? $_item->getRemoveUrl() : $_item->getUrl()) ?>"
+                           id="<?php echo $id; ?>" />
+
+                    <label for="<?php echo $id; ?>" class="layered-nav-filter-label">
+                        <?php echo $_item->getLabel() ?>
+                        <?php if ($this->shouldDisplayProductCount()): ?>
+                            <span class="count">(<?php echo $_item->getCount() ?>)</span>
+                        <?php endif; ?>
+                    </label>
+                </div>
             <?php else: ?>
                 <span>
                     <?php echo $_item->getLabel(); ?>
@@ -22,4 +28,11 @@ $_nofollow = Mage::helper('catalin_seo')->getNofollow();
             <?php endif; ?>
         </li>
     <?php endforeach ?>
+    <?php if($_showMore && count($this->getItems()) > $_showMore): ?>
+        <li>
+            <div class="show_more_filters">
+                <a data-text-more="<?php echo Mage::helper('catalin_seo')->__('Show More'); ?>" data-text-less="<?php echo Mage::helper('catalin_seo')->__('Show Less'); ?>"><?php echo Mage::helper('catalin_seo')->__('Show More'); ?></a>
+            </div>
+        </li>
+    <?php endif; ?>
 </ol>

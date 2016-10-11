@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <tabs>
-        <catalin translate="label" module="catalin_seo">
+        <catalin translate="label comment" module="catalin_seo">
             <label>Catalin</label>
             <sort_order>300</sort_order>
         </catalin>
     </tabs>
     <sections>
-        <catalin_seo translate="label" module="catalin_seo">
+        <catalin_seo translate="label comment" module="catalin_seo">
             <label>Catalin SEO</label>
             <tab>catalin</tab>
             <frontend_type>text</frontend_type>
@@ -16,7 +16,7 @@
             <show_in_website>1</show_in_website>
             <show_in_store>1</show_in_store>
             <groups>
-                <catalog translate="label">
+                <catalog translate="label comment">
                     <label>Catalog Layered Navigation</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>2</sort_order>
@@ -24,7 +24,7 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <enabled translate="label">
+                        <enabled translate="label comment">
                             <label>Enable</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
@@ -34,7 +34,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </enabled>
-                        <ajax_enabled translate="label">
+                        <ajax_enabled translate="label comment">
                             <label>Enable AJAX</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
@@ -47,7 +47,7 @@
                                 <enabled>1</enabled>
                             </depends>
                         </ajax_enabled>
-                        <price_slider translate="label">
+                        <price_slider translate="label comment">
                             <label>Enable Price Slider</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
@@ -60,7 +60,7 @@
                                 <enabled>1</enabled>
                             </depends>
                         </price_slider>
-                        <multiple_choice_filters translate="label">
+                        <multiple_choice_filters translate="label comment">
                             <label>Enable Multiple Choice Filter</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
@@ -73,7 +73,7 @@
                                 <enabled>1</enabled>
                             </depends>
                         </multiple_choice_filters>
-                        <routing_suffix translate="label">
+                        <routing_suffix translate="label comment">
                             <label>Routing Suffix</label>
                             <frontend_type>text</frontend_type>
                             <comment>Used in url generation (it should be alphanumeric) - Do not use slash ( / )</comment>
@@ -86,7 +86,7 @@
                                 <enabled>1</enabled>
                             </depends>
                         </routing_suffix>
-                        <nofollow translate="label">
+                        <nofollow translate="label comment">
                             <label>Enable Nofollow on Layered Navigation Links</label>
                             <frontend_type>select</frontend_type>
                             <source_model>adminhtml/system_config_source_yesno</source_model>
@@ -98,6 +98,34 @@
                                 <enabled>1</enabled>
                             </depends>
                         </nofollow>
+                        <category_links translate="label comment">
+                            <label>Category links go to category instead of applying filter</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </category_links>
+                        <show_more_link translate="label comment">
+                            <label>Use 'Show more' link</label>
+                            <comment>Show 'Show more' link when option has more than X items (use 0 for showing all)</comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </show_more_link>
+                        <search_filter translate="label comment">
+                            <label>Search attribute values</label>
+                            <comment>Show a search box for attribute values when all options are shown</comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </search_filter>
                     </fields>
                 </catalog>
             </groups>

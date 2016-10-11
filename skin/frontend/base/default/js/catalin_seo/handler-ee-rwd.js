@@ -27,8 +27,13 @@ var CatalinSeoHandler = {
             url = el;
         } else if (el.tagName.toLowerCase() === 'a') {
             url = $(el).readAttribute('href');
-        } else if (el.tagName.toLowerCase() === 'select') {
+        } else if (el.tagName.toLowerCase() === 'select' || el.tagName.toLowerCase() === 'input') {
             url = $(el).getValue();
+        }
+
+        if ($j(el).hasClass('no-ajax')) {
+            window.location.href = url;
+            return;
         }
 
         fullUrl = self.prepareAjaxUrl(url);
@@ -38,12 +43,16 @@ var CatalinSeoHandler = {
 
         self.pushState(null, url, false);
 
+        self.showMoreListener();
+
+        self.searchBoxListener();
+
         new Ajax.Request(fullUrl, {
             method: 'get',
             onSuccess: function (transport) {
                 if (transport.responseJSON) {
                     $('catalog-listing').update(transport.responseJSON.listing);
-                    $$('.block-layered-nav')[0].update(transport.responseJSON.layer);
+                    $$('.block-layered-nav')[0].replace(transport.responseJSON.layer);
                     self.pushState({
                         listing: transport.responseJSON.listing,
                         layer: transport.responseJSON.layer
@@ -133,14 +142,16 @@ var CatalinSeoHandler = {
             $$('div.sorter a'),
             $$('div.pager select'),
             $$('div.sorter select'),
-            $$('div.block-layered-nav a')
+            $$('div.block-layered-nav a'),
+            $$('div.block-layered-nav input[type="checkbox"]')
         );
         els.each(function (el) {
-            if (el.tagName.toLowerCase() === 'a') {
+            var tagName = el.tagName.toLowerCase();
+            if (tagName === 'a') {
                 $(el).observe('click', function (event) {
                     self.handleEvent(this, event);
                 });
-            } else if (el.tagName.toLowerCase() === 'select') {
+            } else if (tagName === 'select' || tagName === 'input') {
                 $(el).setAttribute('onchange', '');
                 $(el).observe('change', function (event) {
                     self.handleEvent(this, event);
@@ -178,13 +189,14 @@ var CatalinSeoHandler = {
             self.ajaxListener();
 
             (function (History) {
-                if (!History.enabled) {
+                // Skip empty categories.
+                if (!History.enabled || !$('catalog-listing')) {
                     return false;
                 }
 
                 self.pushState({
                     listing: $('catalog-listing').innerHTML,
-                    layer: $$('.block-layered-nav')[0].innerHTML
+                    layer: $$('.block-layered-nav')[0].outerHTML
                 }, document.location.href, true);
 
                 // Bind to StateChange Event
@@ -192,7 +204,7 @@ var CatalinSeoHandler = {
                     if (event.type == 'popstate') {
                         var State = History.getState();
                         $('catalog-listing').update(State.data.listing);
-                        $$('.block-layered-nav')[0].update(State.data.layer);
+                        $$('.block-layered-nav')[0].replace(State.data.layer);
                         self.ajaxListener();
                         self.toggleContent();
                         self.alignProductGridActions();
@@ -206,6 +218,10 @@ var CatalinSeoHandler = {
                     }
                 });
             })(window.History);
+
+            self.showMoreListener();
+
+            self.searchBoxListener();
         });
     },
     toggleContent: function() {
@@ -373,6 +389,36 @@ var CatalinSeoHandler = {
             },
             unmatch: function () {
                 this.toggleElements.toggleSingle({destruct: true});
+            }
+        });
+    },
+    showMoreListener: function() {
+        $j('div.show_more_filters').on('click', function (e) {
+            $j(e.target).parent().parent().parent().find('.filter_hide').toggle();
+            $j(e.target).parent().parent().parent().parent().prev('.attribute_value_search_box').toggle().find('input').focus();
+            if($j(e.target).text() == $j(e.target).data('text-more')) {
+                $j(e.target).text($j(e.target).data('text-less'));
+            } else {
+                $j(e.target).text($j(e.target).data('text-more'));
+            }
+        });
+    },
+    searchBoxListener: function() {
+        /* Make CSS contains psuedo selector case insensitive */
+        $j.expr[":"].contains = $j.expr.createPseudo(function(arg) {
+            return function( elem ) {
+                return $j(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+            };
+        });
+
+        $j('.attribute_value_search_box input').on('keyup', function (e) {
+            if($j(e.target).val()) {
+                $j(e.target).parent().next('dd').find('li').hide();
+                $j(e.target).parent().next('dd').find('li:contains("' + $j(e.target).val() + '")').each(function (i, li) {
+                    $j(li).show();
+                });
+            } else {
+                $j(e.target).parent().next('dd').find('li').show();
             }
         });
     }

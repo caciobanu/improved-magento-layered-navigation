@@ -30,7 +30,7 @@ class Catalin_SEO_Model_Catalog_Resource_Layer_Filter_Price extends Mage_Catalog
             && Mage::helper('catalin_seo')->isPriceSliderEnabled()
         ) {
             $currencyRate = $filter->getLayer()->getProductCollection()->getCurrencyRate();
-            return $price / $currencyRate;
+            return sprintf('%F', $price / $currencyRate);
         }
 
         return parent::_getComparingValue($price, $filter, $decrease);

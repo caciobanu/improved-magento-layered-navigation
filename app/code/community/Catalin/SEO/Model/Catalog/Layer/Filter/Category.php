@@ -62,11 +62,15 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Category extends Mage_Catalog_Model
             $data = array();
             foreach ($categories as $category) {
                 if ($category->getIsActive() && $category->getProductCount()) {
-                    $urlKey = $category->getUrlKey();
-                    if (empty($urlKey)) {
-                        $urlKey = $category->getId();
+                    if (Mage::helper('catalin_seo')->isCategoryLinksEnabled()) {
+                        $urlKey = $category->getUrl();
                     } else {
-                        $urlKey = $category->getId() . '-' . $urlKey;
+                        $urlKey = $category->getUrlKey();
+                        if (empty($urlKey)) {
+                            $urlKey = $category->getId();
+                        } else {
+                            $urlKey = $category->getId() . '-' . $urlKey;
+                        }
                     }
 
                     $data[] = array(

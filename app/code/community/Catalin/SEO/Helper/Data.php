@@ -73,6 +73,19 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     }
 
     /**
+     * Check if category links are enabled instead of the filter
+     *
+     * @return boolean
+     */
+    public function isCategoryLinksEnabled()
+    {
+        if (!$this->isEnabled()) {
+            return false;
+        }
+        return Mage::getStoreConfigFlag('catalin_seo/catalog/category_links');
+    }
+
+    /**
      * Retrieve routing suffix
      *
      * @return string
@@ -134,16 +147,22 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         $params = array(
             '_current' => true,
             '_use_rewrite' => true,
-            '_query' => $query,
-            '_escape' => true,
+            '_query' => $query
         );
 
         $url = Mage::getUrl('*/*/*', $params);
         $urlPath = '';
 
+        if (isset($filters['cat']) && $this->isCategoryLinksEnabled()) {
+            $url = $filters['cat'];
+        }
+
         if (!$noFilters) {
             // Add filters
             $layerParams = $this->getCurrentLayerParams($filters);
+            if (isset($layerParams['cat']) && $this->isCategoryLinksEnabled()) {
+                unset($layerParams['cat']);
+            }
             foreach ($layerParams as $key => $value) {
                 // Encode and replace escaped delimiter with the delimiter itself
                 $value = str_replace(urlencode(self::MULTIPLE_FILTERS_DELIMITER), self::MULTIPLE_FILTERS_DELIMITER, urlencode($value));
@@ -508,6 +527,23 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     {
         if(Mage::getStoreConfigFlag('catalin_seo/catalog/nofollow')){
             return self::REL_NOFOLLOW;
+        }
+    }
+
+    public function getShowMore()
+    {
+        return Mage::getStoreConfig('catalin_seo/catalog/show_more_link');
+    }
+
+    public function getSearchFilter()
+    {
+        $searchFilter = Mage::getStoreConfig('catalin_seo/catalog/search_filter');
+        if($searchFilter && $this->getShowMore()) {
+            return true;
+        } elseif($searchFilter && !$this->getShowMore()) {
+            return null;
+        } else {
+            return false;
         }
     }
 

@@ -30,7 +30,6 @@
 /app/etc/modules/Mage_*
 /app/etc/modules/Phoenix_*
 
-/app/locale/
 /app/Mage.php
 
 /app/code/core/
@@ -46,6 +45,10 @@
 !/app/design/frontend/base/default/template/catalin_seo/
 /app/design/frontend/base/default/layout/*
 !/app/design/frontend/base/default/layout/catalin_seo.xml
+
+/app/locale/en_US/*
+!/app/locale/en_US/Catalin_SEO.csv
+!/app/locale/nl_NL/Catalin_SEO.csv
 
 /skin/adminhtml
 /skin/install
