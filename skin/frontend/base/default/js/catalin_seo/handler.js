@@ -13,20 +13,20 @@ var CatalinSeoHandler = {
         if (val) {
             var url = self.priceSlider.urlTemplate.replace('__PRICE_VALUE__', val);
             if (self.isAjaxEnabled) {
-                self.handleEvent(url);
+                self.sendAjaxRequest(url);
             } else {
                 window.location.href = url;
             }
         }
     },
     handleEvent: function (el, event) {
-        var url, fullUrl;
+        var url;
         var self = this;
-        if (typeof el === 'string') {
-            url = el;
+        if (el.tagName.toLowerCase() === 'input') {
+            url = $(el).getAttribute('value');
         } else if (el.tagName.toLowerCase() === 'a') {
             url = $(el).readAttribute('href');
-        } else if (el.tagName.toLowerCase() === 'select' || el.tagName.toLowerCase() === 'input') {
+        } else if (el.tagName.toLowerCase() === 'select') {
             url = $(el).getValue();
         }
 
@@ -35,6 +35,15 @@ var CatalinSeoHandler = {
             return;
         }
 
+        self.sendAjaxRequest(url);
+
+        if (event) {
+            event.preventDefault();
+        }
+    },
+    sendAjaxRequest: function(url) {
+        var fullUrl;
+        var self = this;
         // Add this to query string for full page caching systems
         if (url.indexOf('?') != -1) {
             fullUrl = url + '&isLayerAjax=1';
@@ -46,10 +55,6 @@ var CatalinSeoHandler = {
         $('ajax-errors').hide();
 
         self.pushState(null, url, false);
-
-        self.showMoreListener();
-
-        self.searchBoxListener();
 
         new Ajax.Request(fullUrl, {
             method: 'get',
@@ -65,6 +70,8 @@ var CatalinSeoHandler = {
                     self.toggleContent();
                     self.alignProductGridActions();
                     self.blockCollapsing();
+                    self.showMoreListener();
+                    self.searchBoxListener();
 
                     if (ConfigurableSwatchesList) {
                         setTimeout(function(){
@@ -78,10 +85,6 @@ var CatalinSeoHandler = {
             },
             onComplete: CatalinSeoHandler.sendUpdateEvent
         });
-
-        if (event) {
-            event.preventDefault();
-        }
     },
     sendUpdateEvent: function() {
         $j(document).trigger('catalin:updatePage');
@@ -172,6 +175,8 @@ var CatalinSeoHandler = {
                         self.toggleContent();
                         self.alignProductGridActions();
                         self.blockCollapsing();
+                        self.showMoreListener();
+                        self.searchBoxListener();
 
                         if (ConfigurableSwatchesList) {
                             setTimeout(function(){
