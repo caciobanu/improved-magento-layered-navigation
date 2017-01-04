@@ -47,6 +47,17 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
     }
 
     /**
+     * Check if ajax request URI is formed properly to avoid FPC caching HTML source
+     *
+     * @param object $request
+     * @return boolean
+     */
+    public function isRequestAjax()
+    {
+        return (strpos(Mage::app()->getRequest()->getRequestString(), '/isLayerAjax/1') !== false);
+    }
+
+    /**
      * Check if multiple choice filters is enabled
      *
      * @return boolean
