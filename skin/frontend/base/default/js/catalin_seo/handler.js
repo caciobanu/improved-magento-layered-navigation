@@ -23,11 +23,11 @@ var CatalinSeoHandler = {
         var url;
         var self = this;
         if (el.tagName.toLowerCase() === 'input') {
-            url = $(el).getAttribute('value');
+            url = jQuery(el).val();
         } else if (el.tagName.toLowerCase() === 'a') {
-            url = $(el).readAttribute('href');
+            url = jQuery(el).attr('href');
         } else if (el.tagName.toLowerCase() === 'select') {
-            url = $(el).getValue();
+            url = jQuery(el).val();
         }
 
         if (jQuery(el).hasClass('no-ajax')) {
