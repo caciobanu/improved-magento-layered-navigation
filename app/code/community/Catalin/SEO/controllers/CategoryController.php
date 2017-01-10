@@ -21,6 +21,9 @@ class Catalin_Seo_CategoryController extends Mage_Catalog_CategoryController
 
     public function viewAction()
     {
+        $helper = Mage::helper('catalin_seo');
+        /* $helper Catalin_SEO_Helper_Data */
+
         if (($category = $this->_initCatagory())) {
             $design = Mage::getSingleton('catalog/design');
             $settings = $design->getDesignSettings($category);
@@ -43,7 +46,7 @@ class Catalin_Seo_CategoryController extends Mage_Catalog_CategoryController
             $update->addHandle($category->getLayoutUpdateHandle());
             $update->addHandle('CATEGORY_' . $category->getId());
             // apply custom ajax layout
-            if (Mage::helper('catalin_seo')->isAjaxEnabled() && $this->getRequest()->isAjax()) {
+            if ($helper->isAjaxEnabled() && $helper->isRequestAjax()) {
                 $update->addHandle('catalog_category_layered_ajax_layer');
             }
             $this->loadLayoutUpdates();
@@ -72,7 +75,7 @@ class Catalin_Seo_CategoryController extends Mage_Catalog_CategoryController
             $this->_initLayoutMessages('checkout/session');
 
             // return json formatted response for ajax
-            if (Mage::helper('catalin_seo')->isAjaxEnabled() && $this->getRequest()->isAjax()) {
+            if ($helper->isAjaxEnabled() && $helper->isRequestAjax()) {
                 
                 if(Mage::getEdition() == Mage::EDITION_ENTERPRISE){
                     $block = $this->getLayout()->getBlock('enterprisecatalog.leftnav');

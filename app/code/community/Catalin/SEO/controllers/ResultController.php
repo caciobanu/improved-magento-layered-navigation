@@ -24,6 +24,9 @@ class Catalin_Seo_ResultController extends Mage_CatalogSearch_ResultController
      */
     public function indexAction()
     {
+        $helper = Mage::helper('catalin_seo');
+        /* $helper Catalin_SEO_Helper_Data */
+
         $query = Mage::helper('catalogsearch')->getQuery();
         /* @var $query Mage_CatalogSearch_Model_Query */
 
@@ -54,7 +57,7 @@ class Catalin_Seo_ResultController extends Mage_CatalogSearch_ResultController
 
             $this->loadLayout();
             // apply custom ajax layout
-            if (Mage::helper('catalin_seo')->isAjaxEnabled() && $this->getRequest()->isAjax()) {
+            if ($helper->isAjaxEnabled() && $helper->isRequestAjax()) {
                 $update = $this->getLayout()->getUpdate();
                 $update->addHandle('catalog_category_layered_ajax_layer');
             }
@@ -62,7 +65,7 @@ class Catalin_Seo_ResultController extends Mage_CatalogSearch_ResultController
             $this->_initLayoutMessages('checkout/session');
 
             // return json formatted response for ajax
-            if (Mage::helper('catalin_seo')->isAjaxEnabled() && $this->getRequest()->isAjax()) {
+            if ($helper->isAjaxEnabled() && $helper->isRequestAjax()) {
                 $listing = $this->getLayout()->getBlock('search_result_list')->toHtml();
 
 
