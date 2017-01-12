@@ -547,4 +547,20 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         }
     }
 
+    /**
+     * @return bool
+     */
+    public function isAjaxRequest()
+    {
+        $request = Mage::app()->getRequest();
+
+        if (Mage::getEdition() == Mage::EDITION_ENTERPRISE) {
+            // On Enterprise, FPC caches headers based on request-path (sans query string.)
+            // This means, request-headers or query string values cannot affect the Content-Type.
+            // Otherwise, an attacker can cause cached category pages to be served as application/json.
+            return strpos($request->getRequestString(), '/isLayerAjax/1') !== false;
+        }
+
+        return $request->isAjax();
+    }
 }
