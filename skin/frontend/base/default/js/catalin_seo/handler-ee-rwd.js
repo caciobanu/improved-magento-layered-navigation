@@ -206,8 +206,11 @@ var CatalinSeoHandler = {
                 History.Adapter.bind(window, 'popstate', function (event) {
                     if (event.type == 'popstate') {
                         var State = History.getState();
-                        $('catalog-listing').update(State.data.listing);
-                        $$('.block-layered-nav')[0].replace(State.data.layer);
+                        // don't update blocks if data is undefined
+                        if (typeof State.data.listing != 'undefined' && typeof State.data.layer != 'undefined') {
+                            $('catalog-listing').update(State.data.listing);
+                            $$('.block-layered-nav')[0].replace(State.data.layer);
+                        }
                         self.ajaxListener();
                         self.toggleContent();
                         self.alignProductGridActions();
