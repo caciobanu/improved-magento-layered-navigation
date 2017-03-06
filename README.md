@@ -28,6 +28,27 @@ $ modman init
 $ modman clone https://github.com/caciobanu/improved-magento-layered-navigation.git
 ```
 
+Install via Composer
+----------------
+
+You can install this module [Composer](https://getcomposer.org/) in combination with a Magento Composer installer (e.g. [Bragento Composer Installer](https://github.com/bragento/bragento-composer-installer)).
+
+Make sure you have required the [Firegento packages](https://packages.firegento.com/) in your composer.json's `repositories` node
+
+```json
+"repositories": [
+    {
+      "type": "composer",
+      "url": "https://packages.firegento.com"
+    }
+]
+```
+Afterwards you can install this module by simply requireing it.
+
+```bash
+$ composer require caciobanu/improved-magento-layered-navigation
+```
+
 Contribution
 ------------
 
