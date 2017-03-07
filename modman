@@ -1,14 +1,14 @@
 # app
-app/code/community/Catalin/SEO
+app/code/community/Catalin/SEO app/code/community/Catalin/SEO
 
 # design
-app/design/frontend/base/default/layout/catalin_seo.xml
-app/design/frontend/base/default/template/catalin_seo
+app/design/frontend/base/default/layout/catalin_seo.xml app/design/frontend/base/default/layout/catalin_seo.xml
+app/design/frontend/base/default/template/catalin_seo app/design/frontend/base/default/template/catalin_seo
 
 # etc
-app/etc/modules/Catalin_SEO.xml
+app/etc/modules/Catalin_SEO.xml app/etc/modules/Catalin_SEO.xml
 
 # skin
-skin/frontend/base/default/css/catalin_seo
-skin/frontend/base/default/images/catalin_seo
-skin/frontend/base/default/js/catalin_seo
+skin/frontend/base/default/css/catalin_seo skin/frontend/base/default/css/catalin_seo
+skin/frontend/base/default/images/catalin_seo skin/frontend/base/default/images/catalin_seo
+skin/frontend/base/default/js/catalin_seo skin/frontend/base/default/js/catalin_seo
