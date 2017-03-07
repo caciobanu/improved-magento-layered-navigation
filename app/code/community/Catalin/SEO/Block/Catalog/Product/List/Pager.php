@@ -37,4 +37,9 @@ class Catalin_SEO_Block_Catalog_Product_List_Pager extends Mage_Page_Block_Html_
         return $this->helper('catalin_seo')->getPagerUrl($params);
     }
 
+    public function getCurrentPageUrl()
+    {
+        return $this->getPageUrl($this->getCollection()->getCurPage());
+    }
+
 }

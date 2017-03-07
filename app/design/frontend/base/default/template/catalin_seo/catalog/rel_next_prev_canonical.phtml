@@ -1,0 +1,45 @@
+<?php
+
+$actionName = $this->getAction()->getFullActionName();
+if ($actionName == 'catalog_category_view') // Category Page
+{
+    $category = Mage::registry('current_category');
+
+    $prodCol = Mage::getSingleton('catalog/layer')->getProductCollection();
+    $tool = $this->getLayout()->createBlock('catalin_seo/catalog_product_list_pager')->setCollection($prodCol);
+
+    $linkPrev = false;
+    $linkNext = false;
+
+    if ($tool->getCollection()->getSelectCountSql()) {
+        if ($tool->getLastPageNum() > 1) {
+            if (!$tool->isFirstPage()) {
+                $linkPrev = true;
+                if ($tool->getCurrentPage() == 2) {
+                    $url = explode('?', $tool->getPreviousPageUrl());
+                    $prevUrl = @$url[0];
+                }
+                else {
+                    $prevUrl = $tool->getPreviousPageUrl();
+                }
+            }
+            if (!$tool->isLastPage()) {
+                $linkNext = true;
+                $nextUrl = $tool->getNextPageUrl();
+            }
+
+        }
+    }
+    if ($tool->getCurrentPage() == 1) {
+        $url = explode('?', $tool->getCurrentPageUrl());
+        $currentUrl = @$url[0];
+    } else {
+        $currentUrl = $tool->getCurrentPageUrl();
+    }
+    echo '<link rel="canonical" href="' . $currentUrl . '" />';
+
+    if ($linkPrev) echo '<link rel="prev" href="' . $prevUrl . '" />';
+    if ($linkNext) echo '<link rel="next" href="' . $nextUrl . '" />';
+}
+
+?>
