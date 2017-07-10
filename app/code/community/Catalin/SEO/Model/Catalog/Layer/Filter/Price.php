@@ -82,7 +82,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Price extends Mage_Catalog_Model_La
             if (stripos($condition, 'price_index') !== false) {
                 continue;
             }
-            $conditionsNoPrice[] = $condition;
+            $conditionsNoPrice[] = str_replace('AND ', '', $condition);
         }
         $select->setPart(Zend_Db_Select::WHERE, $conditionsNoPrice);
 
