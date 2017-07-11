@@ -204,9 +204,11 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
         if (Mage::getEdition() == Mage::EDITION_ENTERPRISE) {
             $lenSuffix = (strlen($suffix) > 0 ? strlen($suffix) + 1 : 0);
             return substr($urlParts, 0, strlen($urlParts) - $lenSuffix);
-        } else {
+        } else if(substr($urlParts, -strlen($suffix))===$suffix){
             return substr($urlParts, 0, strlen($urlParts) - strlen($suffix));
         }
+        
+        return trim($urlParts, '/');
     }
 
     /**
