@@ -61,6 +61,11 @@ var CatalinSeoHandler = {
             onSuccess: function (transport) {
                 if (transport.responseJSON) {
                     $('catalog-listing').update(transport.responseJSON.listing);
+                    
+                    jQuery('html, body').animate({
+                        scrollTop: jQuery('#catalog-listing').offset().top - 20
+                    });
+                    
                     $('layered-navigation').update(transport.responseJSON.layer);
                     self.pushState({
                         listing: transport.responseJSON.listing,
