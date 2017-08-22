@@ -90,7 +90,8 @@ class Catalin_Seo_CategoryController extends Mage_Catalog_CategoryController
 
                 $response = array(
                     'listing' => $listing,
-                    'layer' => $layer
+                    'layer' => $layer,
+                    'subheading' => Mage::helper('flaman_productlocations')->getFilterLocationName(),
                 );
 
                 $this->getResponse()->setHeader('Content-Type', 'application/json', true);
