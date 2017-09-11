@@ -59,6 +59,7 @@ var CatalinSeoHandler = {
         new Ajax.Request(fullUrl, {
             method: 'get',
             onSuccess: function (transport) {
+                console.log(transport)
                 if (transport.responseJSON) {
                     $('catalog-listing').update(transport.responseJSON.listing);
                     
@@ -69,6 +70,13 @@ var CatalinSeoHandler = {
                     jQuery('html, body').animate({
                         scrollTop: jQuery('#catalog-listing').offset().top - 20
                     });
+
+                    if(jQuery.fn.jail){
+                        jQuery('#catalog-listing img.lazy').jail({
+                            event: 'load+scroll+mouseover',
+                            placeholder : "/skin/frontend/base/default/images/mgt_lazy_image_loader/loader.svg"
+                        });
+                    }
                     
                     $('layered-navigation').update(transport.responseJSON.layer);
                     self.pushState({
