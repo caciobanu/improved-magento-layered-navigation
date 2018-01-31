@@ -183,7 +183,7 @@ var CatalinSeoHandler = {
 
                 self.pushState({
                     listing: $('catalog-listing').innerHTML,
-                    layer: $('layered-navigation').innerHTML
+                    layer: ($('layered-navigation') != undefined) ? $('layered-navigation').innerHTML : null
                 }, document.location.href, true);
 
                 // Bind to StateChange Event
