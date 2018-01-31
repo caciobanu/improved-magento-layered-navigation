@@ -78,7 +78,10 @@ var CatalinSeoHandler = {
                         });
                     }
                     
-                    $('layered-navigation').update(transport.responseJSON.layer);
+                    if($('layered-navigation') != undefined) {
+                        $('layered-navigation').update(transport.responseJSON.layer);
+                    }
+                    
                     self.pushState({
                         listing: transport.responseJSON.listing,
                         layer: transport.responseJSON.layer
