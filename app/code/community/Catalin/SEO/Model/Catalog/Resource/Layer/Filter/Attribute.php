@@ -86,6 +86,7 @@ class Catalin_SEO_Model_Catalog_Resource_Layer_Filter_Attribute extends Mage_Cat
         $select->reset(Zend_Db_Select::ORDER);
         $select->reset(Zend_Db_Select::LIMIT_COUNT);
         $select->reset(Zend_Db_Select::LIMIT_OFFSET);
+        $select->reset(Zend_Db_Select::GROUP);
 
 
         $connection = $this->_getReadAdapter();
@@ -105,12 +106,13 @@ class Catalin_SEO_Model_Catalog_Resource_Layer_Filter_Attribute extends Mage_Cat
                 $from[$key] = $part;
             }
         }
+        
         $select->setPart(Zend_Db_Select::FROM, $from);
         // end of removing
 
         $select
             ->join(
-                array($tableAlias => $this->getMainTable()), join(' AND ', $conditions), array('value', 'count' => new Zend_Db_Expr("COUNT({$tableAlias}.entity_id)")))
+                array($tableAlias => $this->getMainTable()), join(' AND ', $conditions), array('value', 'count' => new Zend_Db_Expr("COUNT(DISTINCT e.entity_id)")))
             ->group("{$tableAlias}.value");
 
         return $connection->fetchPairs($select);

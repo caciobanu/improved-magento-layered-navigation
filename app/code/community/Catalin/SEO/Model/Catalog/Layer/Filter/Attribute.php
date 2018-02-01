@@ -19,6 +19,45 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Mode
 
     protected $_values = array();
 
+    /**
+     * Create filter item object
+     *
+     * @param   string $label
+     * @param   mixed $value
+     * @param   int $count
+     * @return  Mage_Catalog_Model_Layer_Filter_Item
+     */
+    protected function _createItem($label, $value, $count=0, $optionId = null)
+    {
+        return Mage::getModel('catalog/layer_filter_item')
+            ->setFilter($this)
+            ->setLabel($label)
+            ->setValue($value)
+            ->setOptionId($optionId)
+            ->setCount($count);
+    }
+
+    /**
+     * Initialize filter items
+     *
+     * @return  Mage_Catalog_Model_Layer_Filter_Abstract
+     */
+    protected function _initItems()
+    {
+        $data = $this->_getItemsData();
+        $items=array();
+        foreach ($data as $itemData) {
+            $items[] = $this->_createItem(
+                $itemData['label'],
+                $itemData['value'],
+                $itemData['count'],
+                $itemData['option_id']
+            );
+        }
+        $this->_items = $items;
+        return $this;
+    }
+    
     public function getValues()
     {
         return $this->_values;
@@ -98,6 +137,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Mode
                                 'label' => $option['label'],
                                 'value' => $attrUrlKeyModel->getUrlValue($attribute->getId(), $option['value']),
                                 'count' => $optionsCount[$option['value']],
+                                'option_id' => $option['value']
                             );
                         }
                     } else {
@@ -105,6 +145,7 @@ class Catalin_SEO_Model_Catalog_Layer_Filter_Attribute extends Mage_Catalog_Mode
                             'label' => $option['label'],
                             'value' => $attrUrlKeyModel->getUrlValue($attribute->getId(), $option['value']),
                             'count' => isset($optionsCount[$option['value']]) ? $optionsCount[$option['value']] : 0,
+                            'option_id' => $option['value']
                         );
                     }
                 }

@@ -59,9 +59,29 @@ var CatalinSeoHandler = {
         new Ajax.Request(fullUrl, {
             method: 'get',
             onSuccess: function (transport) {
+                console.log(transport)
                 if (transport.responseJSON) {
                     $('catalog-listing').update(transport.responseJSON.listing);
-                    $('layered-navigation').update(transport.responseJSON.layer);
+                    
+                    if($('subheading')){
+                        $('subheading').update(transport.responseJSON.subheading);
+                    }
+                    
+                    jQuery('html, body').animate({
+                        scrollTop: jQuery('#catalog-listing').offset().top - 20
+                    });
+
+                    if(jQuery.fn.jail){
+                        jQuery('#catalog-listing img.lazy').jail({
+                            event: 'load+scroll+mouseover',
+                            placeholder : "/skin/frontend/base/default/images/mgt_lazy_image_loader/loader.svg"
+                        });
+                    }
+                    
+                    if($('layered-navigation') != undefined) {
+                        $('layered-navigation').update(transport.responseJSON.layer);
+                    }
+                    
                     self.pushState({
                         listing: transport.responseJSON.listing,
                         layer: transport.responseJSON.layer
@@ -78,6 +98,7 @@ var CatalinSeoHandler = {
                             jQuery(document).trigger('product-media-loaded');
                         }, 0);
                     }
+                    
                 } else {
                     $('ajax-errors').show();
                 }
@@ -162,7 +183,7 @@ var CatalinSeoHandler = {
 
                 self.pushState({
                     listing: $('catalog-listing').innerHTML,
-                    layer: $('layered-navigation').innerHTML
+                    layer: ($('layered-navigation') != undefined) ? $('layered-navigation').innerHTML : null
                 }, document.location.href, true);
 
                 // Bind to StateChange Event
