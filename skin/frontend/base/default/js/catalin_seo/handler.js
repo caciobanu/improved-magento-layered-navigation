@@ -61,7 +61,9 @@ var CatalinSeoHandler = {
             onSuccess: function (transport) {
                 if (transport.responseJSON) {
                     $('catalog-listing').update(transport.responseJSON.listing);
+                    if ($('layered-navigation') != null) {
                     $('layered-navigation').update(transport.responseJSON.layer);
+                    };
                     self.pushState({
                         listing: transport.responseJSON.listing,
                         layer: transport.responseJSON.layer
@@ -160,10 +162,16 @@ var CatalinSeoHandler = {
                     return false;
                 }
 
+				if ($('layered-navigation') == null) {
+                self.pushState({
+                    listing: $('catalog-listing').innerHTML
+                }, document.location.href, true);
+                } else {
                 self.pushState({
                     listing: $('catalog-listing').innerHTML,
                     layer: $('layered-navigation').innerHTML
                 }, document.location.href, true);
+                };
 
                 // Bind to StateChange Event
                 History.Adapter.bind(window, 'popstate', function (event) {
