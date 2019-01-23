@@ -62,7 +62,7 @@ var CatalinSeoHandler = {
                 if (transport.responseJSON) {
                     $('catalog-listing').update(transport.responseJSON.listing);
                     if ($('layered-navigation') != null) {
-                    $('layered-navigation').update(transport.responseJSON.layer);
+                        $('layered-navigation').update(transport.responseJSON.layer);
                     };
                     self.pushState({
                         listing: transport.responseJSON.listing,
@@ -162,15 +162,15 @@ var CatalinSeoHandler = {
                     return false;
                 }
 
-				if ($('layered-navigation') == null) {
-                self.pushState({
-                    listing: $('catalog-listing').innerHTML
-                }, document.location.href, true);
+                if ($('layered-navigation') == null) {
+                    self.pushState({
+                        listing: $('catalog-listing').innerHTML
+                    }, document.location.href, true);
                 } else {
-                self.pushState({
-                    listing: $('catalog-listing').innerHTML,
-                    layer: $('layered-navigation').innerHTML
-                }, document.location.href, true);
+                    self.pushState({
+                        listing: $('catalog-listing').innerHTML,
+                        layer: $('layered-navigation').innerHTML
+                    }, document.location.href, true);
                 };
 
                 // Bind to StateChange Event
