@@ -1,6 +1,9 @@
 README
 ================
 
+![#ffc734](https://placehold.it/15/ffc734/000000?text=+) This extension only receives security fixes.
+------------
+
 Requirements
 ------------
 
