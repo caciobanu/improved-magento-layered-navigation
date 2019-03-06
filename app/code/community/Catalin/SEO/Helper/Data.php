@@ -74,12 +74,13 @@ class Catalin_SEO_Helper_Data extends Mage_Core_Helper_Data
 
     /**
      * Check if category links are enabled instead of the filter
+     * Everytime false when you'r not in category page (search result page for exemple)
      *
      * @return boolean
      */
     public function isCategoryLinksEnabled()
     {
-        if (!$this->isEnabled()) {
+        if (!$this->isEnabled() || !Mage::registry('current_category')) {
             return false;
         }
         return Mage::getStoreConfigFlag('catalin_seo/catalog/category_links');
