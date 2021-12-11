@@ -1,8 +1,10 @@
-README
-================
+EOL Notice
+==========
+This project has reached its end-of-life (EOL).
 
-![#ffc734](https://placehold.it/15/ffc734/000000?text=+) This extension only receives security fixes.
-------------
+----------
+README
+============
 
 Requirements
 ------------
